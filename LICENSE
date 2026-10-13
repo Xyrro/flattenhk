@@ -1,0 +1,153 @@
+MIT License
+
+Copyright (c) 2026 flattenhk contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+This project is a port to Hong Kong of flattensf (Flatten SF) by Drew
+Edwards, https://github.com/almostimplemented/flattensf, and most of its
+code is upstream's. That code is used under the following licence,
+reproduced here as it requires:
+
+MIT License
+
+Copyright (c) 2026 sf-flat-routes contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+scripts/screenshots.py is adapted from flatten_zrh, the Zurich port of
+flattensf, https://github.com/MoritzFS/flatten_zrh, and the arrangement of
+this file, of hk_flat_routes/vendor/README.md and of the upstream credits
+in hk_flat_routes/config.py follows that port's. That code is used under
+the following licence, reproduced here as it requires:
+
+MIT License
+
+Copyright (c) 2026 flatten_zrh contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+NOTE ON DATA. These licences cover the code only. Data consumed and
+redistributed by this project carries its own terms (as read 2026-10-13):
+
+  * Street geometry and attributes derive from OpenStreetMap via Overture
+    Maps and are (c) OpenStreetMap contributors, licensed ODbL 1.0
+    (https://opendatacommons.org/licenses/odbl/1-0/). Overture's extract
+    for Hong Kong also holds 2,148 road segments that it takes from TomTom
+    (ODbL 1.0 as well); all of them are of class "unknown", which this
+    project does not route on, so no TomTom record is in the network or in
+    anything derived from it. Derived street geometry in this repository
+    -- outputs/*.geojson, outputs/flat_corridors.*, outputs/*.csv, the two
+    HTML pages under outputs/ and site/data/graph-*.bin.gz -- is a Derived
+    Database under the ODbL and carries its share-alike obligations: it is
+    made available under the ODbL 1.0, and the code that produces it from
+    the sources is in this repository. (The intermediate tables under
+    data/processed/ are derived in the same way; they are rebuilt locally
+    and not kept in the repository.) The place search's mapped features
+    and the land use that marks the network's gated sites (Overture base
+    theme), and the Hong Kong SAR boundary (Overture divisions), are
+    likewise (c) OpenStreetMap contributors, ODbL 1.0.
+  * Elevation is the Digital Terrain Model from the 2020 territory-wide
+    airborne LiDAR survey of the Civil Engineering and Development
+    Department (CEDD), Government of the Hong Kong SAR, obtained from the
+    Common Spatial Data Infrastructure (CSDI) Portal and used under the
+    CSDI Portal's Terms and Conditions of Use
+    (https://portal.csdi.gov.hk/csdi-webpage/doc/TNC), which permit free
+    use, distribution and reproduction for commercial and non-commercial
+    purposes on condition that the Government and the CSDI Portal are
+    identified as the source and the Government's intellectual property
+    rights are acknowledged. The intellectual property rights in that data
+    belong to the Government of the Hong Kong SAR. Derived elevations here
+    (edge profiles, gradients, climbing figures, the hillshade) are derived
+    from that model. The raw tiles are not redistributed in this
+    repository. The Lands Department 5 m terrain model, used for
+    validation only, is Government data listed on DATA.GOV.HK and used
+    under the DATA.GOV.HK Terms and Conditions of Use
+    (https://data.gov.hk/en/terms-and-conditions).
+  * The bench marks are the Geodetic Survey Control Station Database of
+    the Survey and Mapping Office, Lands Department, used under the CSDI
+    Portal Terms and Conditions of Use cited above (the database is a
+    dataset of the CSDI Portal, fetched here from the Lands Department's
+    own copy): free for commercial and non-commercial use, the Government
+    and the CSDI Portal to be named as the source. Used for validation
+    only and not redistributed beyond the stations quoted in the
+    validation report.
+  * Neighborhood boundaries are the statutory planning scheme areas
+    (Outline Zoning Plan boundaries) published by the Town Planning Board /
+    Planning Department, Government of the Hong Kong SAR, under the Town
+    Planning Board's terms of use; the Board's intellectual property rights
+    in them are acknowledged. This project uses 58 of the 151 plans, as
+    56 neighborhoods: two extension plans are merged into their parents.
+  * Place names, points of interest, building and estate names and street
+    addresses in the route finder's search come from the Lands Department
+    (Place Names, iGeoCom, Building names), the Digital Policy Office
+    (Address Lookup Service) and the Transport Department (tram and ferry
+    stops), Government of the Hong Kong SAR, via the CSDI Portal and
+    DATA.GOV.HK under the terms cited above; the intellectual property
+    rights in them belong to the Government of the Hong Kong SAR.
+  * Shops, restaurants and similar points of interest in the place search
+    come from Overture Maps places, licensed CDLA Permissive 2.0
+    (https://cdla.dev/permissive-2-0/) or CC0 1.0 by record.
+  * hk_flat_routes/vendor/ and site/leaflet-*.{js,css} contain Leaflet
+    1.9.4, (c) 2010-2023 Volodymyr Agafonkin, (c) 2010-2011 CloudMade,
+    licensed BSD-2-Clause; its licence text is
+    hk_flat_routes/vendor/LICENSE-leaflet.txt.
+
+Nothing here is legal advice. The Government terms of use are not open
+licences in the Creative Commons sense: they require attribution, include an
+indemnity, and may change. Anyone redistributing this project's outputs
+should read them.

@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hk-flat-routes"
+version = "1.0.0"
+description = "Flat walking and cycling routes across Hong Kong: a port of flattensf on the CEDD LiDAR terrain model"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.2",
+    "scipy>=1.10",
+    "shapely>=2.0",
+    "pyproj>=3.5",
+    "geopandas>=0.14",
+    "pyogrio>=0.7",
+    "rasterio>=1.3",
+    "networkx>=3.1",
+    "pyarrow>=14",
+    "fsspec>=2023.9",
+    "aiohttp>=3.9",
+    "requests>=2.31",
+    "matplotlib>=3.7",
+    "pillow>=10",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "playwright>=1.40", "pyflakes>=3.0"]
+
+[project.scripts]
+hk-flat-routes = "hk_flat_routes.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["hk_flat_routes*"]
+
+[tool.setuptools.package-data]
+hk_flat_routes = ["web/*", "vendor/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

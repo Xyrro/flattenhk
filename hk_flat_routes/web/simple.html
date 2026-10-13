@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Flatten HK 平路香港</title>
+<meta name="description" content="Flatten HK: the flattest walking or cycling route between any two places in Hong Kong, and every route between it and the shortest one.">
+<!--__HEAD_EXTRA__-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>/*__LEAFLET_CSS__*/</style>
+<style>/*__APP_CSS__*/</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="credit" id="credit">Hong Kong port of <a href="https://flattensf.com/">Flatten SF</a> by <a href="https://almostimplemented.com" rel="author">Drew Edwards</a></div>
+<section id="card" aria-label="Flatten HK: plan a flat route">
+  <div class="head">
+    <h1>Flatten HK <small>flat routes across Hong Kong</small></h1>
+    <div class="seg units" id="units" role="group" aria-label="Units">
+      <button type="button" data-u="km" aria-pressed="true">km</button>
+      <button type="button" data-u="mi" aria-pressed="false">mi</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label for="from">From</label>
+      <input id="from" type="text" autocomplete="off" spellcheck="false" placeholder="Place, station, 地方, or Nathan Rd &amp; Jordan Rd">
+      <span class="pin" aria-hidden="true"></span>
+      <ul class="suggest" id="from_s" role="listbox" hidden></ul>
+    </div>
+    <button class="swap" id="swap" title="Swap" aria-label="Swap origin and destination"><svg class="ic-swap" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 16V4M4.9 6.1L7 4l2.1 2.1M13 4v12M10.9 13.9L13 16l2.1-2.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="swap loopbtn" id="loopbtn" type="button" title="Make it a loop" aria-label="Make it a loop" aria-pressed="false">
+      <svg class="ic ic-loop" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5h6a5 5 0 0 1 0 10H7A5 5 0 0 1 7 5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9.3 2.9l2.1 2.1-2.1 2.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle class="a" cx="10" cy="15" r="2.4"/></svg>
+      <svg class="ic ic-line" viewBox="0 0 20 20" aria-hidden="true"><line x1="5" y1="15" x2="15" y2="5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle class="a" cx="4.6" cy="15.4" r="2.6"/><circle class="b" cx="15.4" cy="4.6" r="2.6"/></svg>
+    </button>
+  </div>
+  <div class="row">
+    <div class="field" id="tofield">
+      <label for="to">To</label>
+      <input id="to" type="text" autocomplete="off" spellcheck="false" placeholder="Or click the map">
+      <span class="pin to" aria-hidden="true"></span>
+      <ul class="suggest" id="to_s" role="listbox" hidden></ul>
+    </div>
+    <div class="seg" id="mode" role="group" aria-label="Travel mode">
+      <button data-v="walk" aria-pressed="true">Walk</button>
+      <button data-v="bike" aria-pressed="false">Bike</button>
+    </div>
+  </div>
+  <label class="calm" id="calmrow" hidden>
+    <input type="checkbox" id="calm" checked>
+    <span>Prefer calm streets <small>cycle tracks and quiet streets count shorter, busy roads longer</small></span>
+  </label>
+  <label class="calm" id="obrow" hidden>
+    <input type="checkbox" id="outback">
+    <span>Allow out and back <small>the same streets there and back, often the flattest way</small></span>
+  </label>
+  <div class="statusrow">
+    <div class="status" id="status"></div>
+    <span class="links"><button class="link" id="share" type="button" hidden>Copy link</button><button class="link" id="gpx" type="button" hidden title="Download this route as a GPX file for Strava, Garmin and the rest">GPX</button></span>
+  </div>
+  <input id="sharebox" type="text" readonly hidden aria-label="Link to this route">
+  <div class="slider">
+    <input type="range" id="sl" min="0" max="1" step="0.001" value="1" aria-label="From shortest to flattest">
+    <div class="ends"><span id="end0">Shortest</span><b id="slpos"></b><span id="end1">Flattest</span></div>
+  </div>
+  <div class="result" id="result" hidden>
+    <div class="stat"><div class="v" id="v_dist"></div><div class="k">distance</div></div>
+    <div class="stat"><div class="v" id="v_climb"></div><div class="k">climbing</div></div>
+    <div class="stat"><div class="v" id="v_grade"></div><div class="k">steepest</div></div>
+  </div>
+  <canvas id="prof" width="760" height="184" hidden></canvas>
+  <div class="delta" id="delta"></div>
+  <div class="turns" id="turns" hidden></div>
+  <details>
+    <summary>How this works</summary>
+    <p class="fine">Routes are computed in your browser over /*__N_EDGES__*/
+    street and path segments covering the whole of Hong Kong, with the
+    government's 0.5&nbsp;m LiDAR terrain model (CEDD, 2020) on the
+    Overture / OpenStreetMap street graph. The slider runs the whole
+    trade-off between distance and climbing: every route nothing else beats
+    on both, from the shortest to the flattest worth walking. Sliding right
+    never shortens the route and never adds climbing. Climbing is total
+    gain, not the difference between the endpoints. Stairs, footbridges,
+    subways and the hillside escalators count on foot, not on a bike.</p>
+    <p class="fine">Hong Kong Island, Kowloon with the New Territories,
+    Lantau and the outlying islands are separate networks here: nothing
+    crosses the water on foot or by bike but road tunnels, railways and
+    ferries, so a route is found only within one of them. Each end of a
+    trip is put on the nearest street corner you can use, and a place with
+    none within 400&nbsp;m is not routed to. Footbridges and
+    flyovers are taken as level between their ends (the terrain model is
+    the ground beneath them), and travel follows street centrelines, so
+    which side of the road has the pavement is not modelled.</p>
+    <p class="fine">The loop button turns the trip into a loop from one
+    start: the slider sets the distance, dozens of loops of about that
+    length are tried in every direction and the flattest is shown; tick
+    <i>allow out and back</i> to include the same streets there and back,
+    which is often flatter still.</p>
+    <p class="fine">On a bike, <i>prefer calm streets</i> counts cycle
+    tracks and quiet streets as shorter than they are and busy roads as
+    longer. The slider then runs from the shortest route by that count, so
+    the kilometres shown, which are the real ones, can fall as you slide
+    right. Footpaths, country-park trails, road tunnels and expressways
+    are closed to bikes, as they are by law, and the streets that are open
+    do not all join up, so some places on one island cannot be cycled
+    between. Where a short footpath links a cycle track and the road, a
+    route may take it as a stretch to get off and push: it is marked
+    <i>(push)</i> in the list of streets, and with calm streets preferred
+    it counts for well over its length.</p>
+    <p class="fine"><i>km / mi</i> at the top switches between kilometres
+    and miles. <i>GPX</i> downloads the route on show with its elevation,
+    for Strava, Garmin Connect, Komoot and the like. Place search is
+    offline, in English or Chinese: the territory's street junctions,
+    stations, estates, buildings and other places are built into this
+    page.</p>
+    <p class="fine">This is a Hong Kong port of
+    <a href="https://flattensf.com/">Flatten SF</a> by
+    <a href="https://almostimplemented.com">Drew Edwards</a>
+    (<a href="https://github.com/almostimplemented/flattensf">source</a>,
+    MIT licence): the method, the router and this page are theirs.
+    Streets &copy; OpenStreetMap contributors (ODbL) via Overture Maps,
+    which also supplies some place names (Overture Maps Foundation and
+    its sources). Elevation, place names, buildings, addresses and stops
+    &copy; Government of the Hong Kong SAR, from the
+    <a href="https://portal.csdi.gov.hk/">CSDI Portal</a> and
+    <a href="https://data.gov.hk/">DATA.GOV.HK</a> (CEDD, Lands
+    Department, Digital Policy Office, Transport Department; planning
+    areas &copy; Town Planning Board), used under their terms of use.
+    <a href="/*__REPO_URL__*/">Source, data and the full analysis</a>.</p>
+  </details>
+  <p class="credit-inline">Hong Kong port of <a href="https://flattensf.com/">Flatten SF</a> by <a href="https://almostimplemented.com" rel="author">Drew Edwards</a></p>
+</section>
+<script>/*__LEAFLET_JS__*/</script>
+<script>window.DATA = /*__DATA__*/;</script>
+<script>/*__APP_JS__*/</script>
+</body>
+</html>

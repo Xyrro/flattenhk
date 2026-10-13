@@ -1,0 +1,21 @@
+# Cached source and intermediate data: large (the terrain tiles alone are
+# 14.1 GB), and rebuilt with
+#   python -m hk_flat_routes download
+#   python -m hk_flat_routes build-network
+# for as long as the pinned Overture release is hosted; data/README.md says
+# which four files to keep a copy of for after that.
+data/raw/
+data/processed/
+
+# Regenerable and bulky; rebuild with `python -m hk_flat_routes analyze`
+outputs/lowland_basins.geojson
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.venv/
+.DS_Store
+
+data/sensitivity/

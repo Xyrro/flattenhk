@@ -1,0 +1,42 @@
+# Publishes site/ (the built route finder) to GitHub Pages.
+# Adapted from flattensf's workflow (Drew Edwards, MIT licence).
+#
+# The site is committed already built, because building it needs the
+# cached LiDAR and Overture data (about 14.3 GB) that CI does not have.
+# One-time setup: Settings -> Pages -> Build and deployment -> Source:
+# "GitHub Actions". The Actions token cannot create the Pages site itself
+# (the enablement flag below only helps once an admin has done that), so
+# until then every run fails at the configure step.
+name: Deploy the route finder
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

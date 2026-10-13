@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>/*__PRODUCT_NAME__*/ explorer</title>
+<style>/*__LEAFLET_CSS__*/</style>
+<style>/*__APP_CSS__*/</style>
+</head>
+<body>
+<div id="app">
+  <div id="side">
+    <div class="pad">
+      <h1>/*__PRODUCT_NAME__*/ <small>explorer</small></h1>
+      <p class="sub">/*__CITY_NAME__*/'s low-elevation street network,
+      modelled from the Government's 2020 LiDAR terrain model (CEDD,
+      0.5&nbsp;m) and the Overture&nbsp;/&nbsp;OpenStreetMap street graph.
+      Routing runs in your browser over the real graph. Distances are in
+      kilometres and metres; heights are metres above Principal Datum (mPD).
+      A /*__CITY_NAME__*/ port of
+      <a href="/*__UPSTREAM_SITE__*/">/*__UPSTREAM_NAME__*/</a> by
+      /*__UPSTREAM_AUTHOR__*/.</p>
+
+      <h2>Plan a route</h2>
+      <label>Travel mode</label>
+      <div class="seg" id="mode">
+        <button data-v="walk" aria-pressed="true">Walking</button>
+        <button data-v="bike" aria-pressed="false">Bicycle</button>
+      </div>
+
+      <div class="hint" id="pickhint">Click the map to set the ORIGIN.</div>
+      <label>Next map click sets</label>
+      <div class="seg" id="pickrow">
+        <button data-pick="src" aria-pressed="true">Origin</button>
+        <button data-pick="dst" aria-pressed="false">Destination</button>
+      </div>
+
+      <label for="o">Or choose a neighbourhood &mdash; origin</label>
+      <select id="o"></select>
+      <label for="d">Destination</label>
+      <select id="d"></select>
+      <p class="note">The menus group neighbourhoods by landmass. Hong Kong
+      Island, Kowloon with the New Territories, Lantau and the outlying
+      islands are separate street networks on foot and by bicycle, so a
+      route exists only between two places in the same group.</p>
+      <button class="act" id="swap">Swap origin and destination</button>
+      <button class="act" id="clear">Clear both points</button>
+
+      <label>Preference</label>
+      <div class="seg" id="pref">
+        <button data-v="shortest" aria-pressed="false">Shortest</button>
+        <button data-v="balanced" aria-pressed="true">Balanced</button>
+        <button data-v="min_climb" aria-pressed="false">Flattest</button>
+        <button data-v="grade_averse" aria-pressed="false">Avoid steep</button>
+      </div>
+
+      <h2>Try these</h2>
+      <div id="examples"></div>
+
+      <h2>Result</h2>
+      <div id="res"></div>
+      <canvas id="prof" width="740" height="272"></canvas>
+      <div class="note" id="profnote"></div>
+
+      <h2>Cost weights</h2>
+      <p class="note">The cost of a street, in equivalent metres, is
+      <code>length + &alpha;&times;climb + &beta;&times;steep-distance
+      penalties + &gamma;&times;extreme-grade penalty</code>. Move the
+      sliders to see the route respond.</p>
+      <div id="sliders"></div>
+      <div class="note" id="customnote" style="display:none">
+        Using custom weights rather than a preset.
+      </div>
+      <button class="act" id="resetw">Reset to the selected preset</button>
+
+      <h2>The warped city</h2>
+      <p class="note">Redraw /*__CITY_NAME__*/ so that distance on the page
+      is <em>climbing cost</em> instead of geography. Places separated by a
+      ridge move apart; places joined by a flat corridor pull together.</p>
+      <p class="note">One landmass is redrawn at a time: the one your origin
+      is on or, with no origin set, the one in the middle of the map. There
+      is no walking or cycling cost from one landmass to another to draw, so
+      the others stay where geography puts them, greyed out. Choose an
+      origin elsewhere to warp that landmass instead.</p>
+      <button class="act" id="warptoggle" aria-pressed="false">Show the warped city</button>
+      <div class="slider">
+        <div class="row"><span>Flatness weight &lambda;</span><b id="lab_lambda"></b></div>
+        <input type="range" id="sl_lambda" min="0" max="3" step="0.1">
+        <div class="note">0 is plain walking distance; 1 is the balanced
+        objective; higher values make hills loom larger. Keep it modest to
+        avoid absurd detours.</div>
+      </div>
+      <div class="slider">
+        <div class="row"><span>Morph</span><b id="lab_morph"></b></div>
+        <input type="range" id="sl_morph" min="0" max="1" step="0.02">
+      </div>
+      <div id="warpstate" hidden>
+        <div class="note" id="warpinfo"></div>
+        <div class="note">Street vertices, neighbourhood outlines, corridors
+        and your route on that landmass are all carried by the same
+        deformation, so the route you see is the route you would walk. The
+        deformation is fitted to some 200 anchor junctions, street corners
+        on a lattice sized to the landmass, so it is finer on Hong Kong
+        Island than across Kowloon and the New Territories. Do not expect
+        it to look like a map: on Hong Kong Island the flat north shore,
+        cheap to walk along, gathers in the middle, and the hills and the
+        south side fan out around it.</div>
+      </div>
+
+      <h2>Layers</h2>
+      <div class="layers" id="layers"></div>
+
+      <h2>Street gradient key</h2>
+      <div id="key"></div>
+
+      <p class="note">Climb figures are <em>cumulative</em> elevation gain,
+      not the net difference between the endpoints. Footbridges and flyovers
+      are taken as level between their ends: the terrain model is the ground
+      beneath them. Zoomed out, only the longer streets and paths are drawn;
+      the short ones come in as you zoom. Clicking away from your route
+      inspects the nearest street. Leaflet and the whole street graph are
+      embedded in this file and there is no online base map, so everything
+      works offline.</p>
+
+      <p class="note credits">Streets &copy;
+      <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
+      contributors (ODbL) via <a href="https://overturemaps.org">Overture
+      Maps</a>. Elevation: CEDD 2020 LiDAR DTM &copy; Government of the Hong
+      Kong SAR, from the <a href="https://portal.csdi.gov.hk/">CSDI
+      Portal</a>. Planning areas &copy; Town Planning Board.
+      /*__CITY_NAME__*/ port of
+      <a href="/*__UPSTREAM_SITE__*/">/*__UPSTREAM_NAME__*/</a> by
+      /*__UPSTREAM_AUTHOR__*/ (<a href="/*__UPSTREAM_REPO__*/">source</a>,
+      MIT licence): the method, the router and this page are theirs.
+      <a href="/*__REPO_URL__*/">Source of this port</a>.</p>
+    </div>
+  </div>
+  <div id="map"><div class="busy" id="busy">Warping the city&hellip;</div></div>
+</div>
+<script>/*__LEAFLET_JS__*/</script>
+<script>window.DATA = /*__DATA__*/;</script>
+<script>/*__APP_JS__*/</script>
+</body>
+</html>
