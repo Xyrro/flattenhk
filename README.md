@@ -111,7 +111,7 @@ out one landmass at a time, and the page says which.
 | `outputs/hk_flat_routes_map.html` | The explorer and the warped city |
 | [`outputs/findings.md`](outputs/findings.md) | The written analysis, generated from the tables below |
 | [`outputs/validation_report.md`](outputs/validation_report.md) | Seven checks against Hong Kong ground truth |
-| `outputs/sensitivity.md`, `sensitivity.csv` | The pipeline rebuilt under 13 perturbed configurations |
+| [`outputs/sensitivity.md`](outputs/sensitivity.md), `sensitivity.csv` | The pipeline rebuilt under 13 perturbed configurations |
 | `outputs/neighborhood_pairs.csv` | Every routed pair under the four objectives |
 | `outputs/pareto_frontier.csv` | The distance / climbing frontier of every pair |
 | `outputs/flat_corridors.{csv,geojson,gpkg}` | The discovered low-gradient corridors |
@@ -239,8 +239,8 @@ which the code still follows line for line.
    street and does not hop between ledges.
    Edges that meet at a junction then share one height there, the median
    of what each found. Bowen Road, which eight bench marks show level to
-   within 4.3 m, reads 10 m of climbing per km with this step; the
-   steep streets do not change.
+   within 4.3 m, reads 10 m of climbing per km with this step and 19 m
+   without it; the steep streets do not change.
 5. **Structures.** As upstream: a linear ramp between the ends of each
    bridge or tunnel, with mid-structure nodes solved as a Laplace problem.
    Here the ramps apply to exactly the flagged stretch of a segment, and
@@ -308,18 +308,28 @@ which the code still follows line for line.
   published 1:5, one bench-mark pair on Hiram's Highway is on a rebuilt
   road, and Quarry Gap reads 6 m high.
 
-**Sensitivity** (`python -m hk_flat_routes sensitivity`, which writes its
-tables to `outputs/sensitivity.md`). The harness rebuilds the elevations
-and the analysis under thirteen one-at-a-time changes: sample spacing
-2.5 and 10 m, smoothing window 25 and 100 m (half and double the
-baseline's 50 m), dead-band 0.25 and 1 m,
-spatial pre-filter 0 and 3 m (upstream's), each of the three hillside
-corrections switched off in turn (the terrace search, the running median,
-the re-levelling of bridge ends), and the second- and third-nearest
-access intersection for every neighborhood. For each it reports the
-headline, the corridor material shared with the baseline, the dominant
-pass, the bench-mark agreement, the contour trip and the reference
-streets.
+**Sensitivity** (`python -m hk_flat_routes sensitivity`; tables in
+[`outputs/sensitivity.md`](outputs/sensitivity.md)). The elevations and
+the analysis were rebuilt under thirteen one-at-a-time changes: sample
+spacing 2.5 and 10 m, smoothing window 25 and 100 m (half and double the
+baseline's 50 m), dead-band 0.25 and 1 m, spatial pre-filter 0 and 3 m
+(upstream's), each of the three hillside corrections switched off in turn
+(the terrace search, the running median, the re-levelling of bridge
+ends), and the second- and third-nearest access intersection for every
+neighborhood. The headline does not move: +20% of distance for 48 to 49%
+of the climbing in every one of them. The bench-mark agreement does not
+either (median -0.42 to -0.40 m, 87 or 88% within 1 m), nor the steep
+reference streets (Old Peak Road 21.6 to 22.1%, Peel Street 23.9 to
+25.1%), and the dominant pass is the same one at Ting Kau in all
+fourteen runs. What the corrections buy shows on the contour roads:
+Bowen Road reads 10.2 m of climbing per km at baseline, 19.2 without the
+terrace search, 20.6 with upstream's 3 m pre-filter, 14.5 without the
+running median and 13.8 without the re-levelling. The corridors are the
+least rigid part, as upstream found: the street that qualifies as
+corridor material is 73 to 95% the same by length, and 8 to 12 of the
+top twelve lead streets keep their place, but where each corridor is
+cut, and so what it is called, shifts. They should be read as a tier,
+not a ranking.
 
 ### Street network
 

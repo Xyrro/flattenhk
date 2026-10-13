@@ -406,6 +406,30 @@ The pairs where the bicycle goes furthest out of the walker's way: Ngau Tau Kok 
 
 The landmasses differ too: the neighbourhoods fall into 4 separate groups by bicycle against 3 on foot.
 
+## How much of this depends on the modelling choices?
+
+Every figure above was recomputed with the whole pipeline rebuilt under 13 one-at-a-time changes to the elevation parameters and the choice of access intersection (`outputs/sensitivity.md` has the full tables).
+
+| Finding | Baseline | Range across all perturbations |
+|---|---|---|
+| Flattest route: extra distance | +20% | +20% to +20% |
+| Flattest route: climbing avoided | 49% | 48% to 49% |
+| Grade-averse: mean steepest pitch | 16.2% | 14.5% to 19.1% |
+| Corridor material shared with baseline (by length) | 100% | 73% to 95% |
+| Lead streets of the top corridors kept | 12 of 12 | 8 to 12 of 12 |
+| Dominant pass | Tsuen Wan West, 32 mPD | same location in 14 of 14 runs; 29-32 mPD |
+| Reference gap: lowest crossing (published 191 mPD) | 193.6 mPD | 193.4-194.0 mPD |
+| Reference trip: excess climb, flat vs shortest | 45.4 vs 91.8 m | flat 44.1-51.9 m, shortest 87.7-98.5 m |
+| Survey benchmarks: median height error | -0.42 m | -0.42 to -0.40 m |
+| Old Peak Road: steepest 100 m (stated maximum 17.0%) | 21.9% | 21.6% to 22.1% |
+| Centre Street: steepest 50 m (signed 25.0%) | 21.9% | 21.7% to 22.3% |
+| Peel Street: steepest 50 m (signed 25.0%) | 24.3% | 23.9% to 25.1% |
+| Hatton Road: mean between bench marks (13.5% by the marks) | 13.6% | 13.5% to 13.6% |
+
+The perturbation that shifts the headline most is **deadband_1m** (double the dead-band), at 49% climbing avoided against 49% at baseline.
+
+The corridors are where the model is least rigid, and it is worth being precise about how. The *street* that qualifies as corridor material is 73-95% the same by length, and the top corridor is Lai Chi Kok Road in 10 of 14 runs; what changes is where each corridor is cut and therefore what it is called, most under **sigma_3m** (73%). Streets that drift in and out of the top twelve: Container Port Road South, Des Voeux Road West, Hoi On Road, Java Road, Science Park Road, Tai Po Road – Tai Wo, Taikoo Wan Road, Yuen Shin Road. They should be read as a tier rather than a ranking.
+
 ## What this analysis does not tell you
 
 - **Elevation is the ground, not the deck.** The terrain model is bare earth: it has no footbridges, flyovers, elevated walkways or tunnels in it. Every stretch flagged as one (468 km of the walkable network, 4%) is given a straight ramp between the ground at its two ends, so a footbridge counts as level and the climb to its deck and down again is not counted, while a bridge the map does not flag is sampled from the ground beneath it.
