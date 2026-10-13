@@ -220,7 +220,8 @@ def test_edges_meet_at_their_nodes(edges):
 
 def test_no_street_of_unknown_class(edges):
     # roads under construction and segments from TomTom with nothing to
-    # judge them by
+    # judge them by; the short links kept between two streets are service
+    # roads
     assert not (edges["cls"] == "unknown").any()
 
 
@@ -238,20 +239,32 @@ def test_north_lantau_is_one_piece_by_bicycle(edges):
     assert d < 15000.0, d
 
 
-def test_walkers_are_kept_off_trunk_road_ramps(edges):
-    # Tuen Mun Station to Yuen Long Station has a footpath all the way; the
-    # carriageway and slip roads of Tuen Mun Road are not it
-    for name in ("Kwai Chung Interchange", "Lam Tei Interchange"):
-        ramps = edges[(edges["name"] == name) & (edges["cls"] == "trunk")]
-        assert not ramps["walk_ok"].any(), name
-    d = _shortest_m(edges, "walk", (113.9730, 22.3950), (114.0350, 22.4460))
-    assert d < 10500.0, d
+def test_walkers_are_kept_off_trunk_road_viaducts(edges):
+    # the walk from Tsing Yi to Mong Kok used to run over the viaducts of
+    # Kwai Chung Interchange; no viaduct of a trunk road is open to walkers
+    # unless the data says so by name
+    deck = edges[(edges["cls"] == "trunk") & edges["is_bridge"] & edges["walk_ok"]]
+    assert deck["length_m"].sum() < 1500.0, deck["length_m"].sum()
+    kwai = edges[(edges["name"] == "Kwai Chung Interchange") & edges["is_bridge"]
+                 & (edges["cls"] == "trunk")]
+    assert len(kwai) and not kwai["walk_ok"].any()
+
+
+def test_a_pin_on_a_trunk_road_is_not_stranded(edges):
+    # Diamond Hill Station is on Lung Cheung Road, a trunk road at grade
+    # with pavements; its slip roads at grade are the way off it.  Lions
+    # Rise Mall is 460 m away, and was a walk of 1.6 km with them closed.
+    d = _shortest_m(edges, "walk", (114.19723, 22.34072), (114.20165, 22.34003), snap_m=400.0)
+    assert d < 800.0, d
+    # Hung Kiu Bus Terminus to Tuen Mun Hospital, by San Tak Street, which
+    # the map classes as a slip road of Tuen Mun Road
+    d = _shortest_m(edges, "walk", (113.97747, 22.40200), (113.97621, 22.40708), snap_m=400.0)
+    assert d < 1500.0, d
 
 
 def test_a_street_is_not_cut_where_a_slip_road_crosses_it(edges):
     # Tuen Hing Road in Tuen Mun: 12 m of it is classed with the slip road
-    # of Tuen Mun Road that joins it there, and with every slip road closed
-    # to walkers the two halves of the street were 350 m apart
+    # of Tuen Mun Road that joins it there
     d = _shortest_m(edges, "walk", (113.97825, 22.39030), (113.97822, 22.39040))
     assert d < 100.0, d
 

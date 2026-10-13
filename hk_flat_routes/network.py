@@ -40,9 +40,9 @@ because of what Hong Kong's data looks like:
   otherwise by name: every vehicular tunnel in Hong Kong is, by law, and a
   tunnel left open would be the flattest route through any hill.
 * **So are a few places the data leaves open and nobody can go**: to
-  walkers, the slip roads and viaducts of trunk roads; to both, the service
-  roads inside container terminals, power stations and military land
-  (``closed_land``).
+  walkers, the viaducts of trunk roads; to both, the service roads inside
+  container terminals, cargo yards, power stations, depots and military
+  land (``closed_land``).
 * **Sidewalks and crossings are used where the centrelines need them.**
   Travel is still modelled on street centrelines, but in Hong Kong a
   footbridge, a subway or a hillside stair very often lands on a mapped
@@ -69,13 +69,14 @@ from .config import (BIKE_FORBIDDEN_CLASSES, BIKE_PERMIT_REQUIRED_CLASSES,
                      BIKE_PUSH_MAX_M, BIKE_PUSH_MULTIPLIER,
                      CLOSED_LAND_EXEMPT_CLASSES, CLOSED_LAND_NAMES,
                      CLOSED_LAND_STREET_CLASSES, CRS_GEOGRAPHIC, CRS_PROJECTED,
-                     FOOT_PERMIT_REQUIRED_RAMP_CLASSES,
-                     FOOT_RAMP_JUNCTION_CLASSES, MAX_EDGE_LENGTH_M,
+                     MAX_EDGE_LENGTH_M,
                      MIN_COMPONENT_NODES, MIN_EDGE_LENGTH_M, MODES,
                      NAME_PAIR_RADIUS_M, NEVER_ROUTABLE_CLASSES,
                      NEVER_ROUTABLE_SUBCLASSES, PROCESSED_DIR,
                      ROAD_TUNNEL_CLASSES, ROAD_TUNNEL_MAX_M,
-                     ROAD_TUNNEL_TUBE_GAP_M, SIDEPATH_SUBCLASSES)
+                     ROAD_TUNNEL_TUBE_GAP_M, SIDEPATH_SUBCLASSES,
+                     UNKNOWN_LINK_MAX_M, VIADUCT_MIN_M,
+                     VIADUCT_PERMIT_REQUIRED_CLASSES)
 from .utils import get_logger, progress, step
 
 log = get_logger("hk_flat_routes.network")
@@ -371,6 +372,59 @@ def load_segments(path: Path) -> pd.DataFrame:
     return table.to_pandas()
 
 
+def _short_links(df: pd.DataFrame) -> np.ndarray:
+    """Segments of class ``unknown`` that are a short link between streets.
+
+    Such segments are taken in runs: pieces that follow one another through
+    connectors no kept segment uses.  True for every piece of a run that is
+    no longer than ``UNKNOWN_LINK_MAX_M`` in all and touches the kept
+    network at two connectors or more (see ``config.UNKNOWN_LINK_MAX_M``).
+    Lengths are taken in metres on the projected line.
+    """
+    import geopandas as gpd
+    import scipy.sparse as sp
+    import shapely
+    from scipy.sparse.csgraph import connected_components
+
+    out = np.zeros(len(df), dtype=bool)
+    unknown = (df["cls"] == "unknown").to_numpy()
+    if not unknown.any() or "connectors" not in df.columns or "geometry" not in df.columns:
+        return out
+
+    kept = (~df["cls"].isin(NEVER_ROUTABLE_CLASSES)
+            & ~df["subclass"].fillna("").isin(NEVER_ROUTABLE_SUBCLASSES)).to_numpy()
+    on_street = {_as_dict(c).get("connector_id")
+                 for conns in df["connectors"].to_numpy()[kept] for c in _as_list(conns)}
+    idx = np.flatnonzero(unknown)
+    lines = gpd.GeoSeries(shapely.from_wkb(df["geometry"].to_numpy()[idx]),
+                          crs=CRS_GEOGRAPHIC).to_crs(CRS_PROJECTED)
+    metres = lines.length.to_numpy()
+    ends = [[_as_dict(c).get("connector_id") for c in _as_list(conns)]
+            for conns in df["connectors"].to_numpy()[idx]]
+
+    # join the pieces that share a connector off the kept network
+    first: dict = {}
+    a, b = [], []
+    for k, ids in enumerate(ends):
+        for c in ids:
+            if c is None or c in on_street:
+                continue
+            if c in first:
+                a.append(first[c]); b.append(k)
+            else:
+                first[c] = k
+    n = len(idx)
+    _, run = connected_components(
+        sp.coo_matrix((np.ones(len(a)), (a, b)), shape=(n, n)), directed=False)
+    total = np.bincount(run, weights=metres)
+    touches: dict = {}
+    for k, ids in enumerate(ends):
+        touches.setdefault(run[k], set()).update(c for c in ids if c in on_street)
+    for k in range(n):
+        out[idx[k]] = total[run[k]] <= UNKNOWN_LINK_MAX_M and len(touches[run[k]]) >= 2
+    return out
+
+
 def _base_filter(df: pd.DataFrame) -> pd.DataFrame:
     """Drop everything that is never part of a walk/bike street network."""
     n0 = len(df)
@@ -378,9 +432,12 @@ def _base_filter(df: pd.DataFrame) -> pd.DataFrame:
     log.info("  subtype=road: %d -> %d", n0, len(df))
 
     df["cls"] = df["class"].fillna("unknown")
+    link = _short_links(df)
+    df.loc[link, "cls"] = "service"
     df = df[~df["cls"].isin(NEVER_ROUTABLE_CLASSES)]
     df = df[~df["subclass"].fillna("").isin(NEVER_ROUTABLE_SUBCLASSES)]
-    log.info("  after class/subclass filter: %d", len(df))
+    log.info("  after class/subclass filter: %d (%d short links of class "
+             "unknown kept as service roads)", len(df), int(link.sum()))
     # Abandoned, proposed and unfinished stretches are dropped piece by
     # piece once the segment has been cut (the flags are ranges).
     # Freeway ramps are tagged is_link on a motorway-ish class; the class
@@ -1078,11 +1135,11 @@ def resolve_access(gdf, land=None):
                  km.sum(), len(km), "; ".join(
                      f"{name or '(unnamed)'} {x:.1f}" for name, x in km.head(8).items()))
 
-    # Slip roads and viaducts of trunk roads, for walkers only: see
-    # config.FOOT_PERMIT_REQUIRED_RAMP_CLASSES.
-    slip = gdf["flags"].apply(lambda f: "is_link" in f).to_numpy()
-    ramp = (gdf["cls"].isin(FOOT_PERMIT_REQUIRED_RAMP_CLASSES).to_numpy()
-            & (gdf["is_bridge"].to_numpy() | slip))
+    # Viaducts of trunk roads, for walkers only: see
+    # config.VIADUCT_PERMIT_REQUIRED_CLASSES.
+    deck = (gdf["cls"].isin(VIADUCT_PERMIT_REQUIRED_CLASSES).to_numpy()
+            & gdf["is_bridge"].to_numpy())
+    viaduct = _run_lengths(u, v, length, deck) > VIADUCT_MIN_M
 
     with step("evaluating per-mode access restrictions", log):
         heading = {}
@@ -1115,14 +1172,7 @@ def resolve_access(gdf, land=None):
                  tunnel & ~long_tunnel & np.isin(tube, tube[tunnel & ~allowed])),
                 ("closed site", site >= 0)]
             if mode_name == "walk":
-                # The piece of a slip road that lies inside a junction of
-                # ordinary streets is part of the junction: both its ends
-                # are on a street a walker may use (see
-                # config.FOOT_RAMP_JUNCTION_CLASSES).
-                streets = ok & gdf["cls"].isin(FOOT_RAMP_JUNCTION_CLASSES).to_numpy()
-                on_street = pd.Index(np.concatenate([u[streets], v[streets]]))
-                junction = slip & pd.Index(u).isin(on_street) & pd.Index(v).isin(on_street)
-                closures.append(("trunk slip road or viaduct", ramp & ~junction))
+                closures.append(("trunk viaduct", viaduct))
             closed = np.zeros(len(gdf), dtype=bool)
             notes = []
             for label, where in closures:

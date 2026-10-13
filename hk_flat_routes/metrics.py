@@ -51,8 +51,9 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from .config import (ELEVATION, GRADE_PERCENTILE, GRADE_THRESHOLDS,
-                     MIN_RELIABLE_GRADE_LENGTH_M, PROCESSED_DIR)
+from .config import (BIKE_PUSH_MAX_GRADE, ELEVATION, GRADE_PERCENTILE,
+                     GRADE_THRESHOLDS, MIN_RELIABLE_GRADE_LENGTH_M,
+                     PROCESSED_DIR)
 from .utils import get_logger, progress, step
 
 log = get_logger("hk_flat_routes.metrics")
@@ -524,6 +525,10 @@ def compute_edge_metrics(edges, profiles: dict, force: bool = False):
     directed["walk_traversable"] = directed["walk_ok"]
     directed["bike_traversable"] = directed["bike_ok"] & ~(
         directed["bike_oneway"] & ~fwd)
+    # ... and nobody pushes one up a flight of steps mapped as a footway
+    # (``config.BIKE_PUSH_MAX_GRADE``)
+    stairs = directed["bike_push"] & (directed["avg_grade"].abs() > BIKE_PUSH_MAX_GRADE)
+    directed["bike_traversable"] &= ~stairs
     directed = directed.drop(columns=["u", "v"])
 
     # Written beside the target and moved into place.  A run directory

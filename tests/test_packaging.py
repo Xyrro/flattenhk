@@ -144,13 +144,12 @@ def test_every_adapted_project_has_its_notice():
     assert "flatten_zrh" in _text("README.md")
 
 
-def test_no_tomtom_segment_is_said_to_be_used():
-    from hk_flat_routes import config
-    if "unknown" in config.WALK.allowed_classes | config.BIKE.allowed_classes:
-        pytest.skip("class unknown is still routable in this checkout")
+def test_the_tomtom_segments_are_accounted_for():
+    """Overture takes some road segments from TomTom.  The documents say
+    which of them the network keeps: the short links, and nothing else."""
     for parts in (("README.md",), ("LICENSE",), ("hk_flat_routes", "sources.py")):
         text = _flat(_text(*parts).replace('" "', ""))
-        assert "TomTom" in text and "a few of the Overture records come from TomTom" not in text
+        assert "TomTom" in text and "50 m" in text, parts
 
 
 def test_the_licence_names_only_files_the_repository_holds():
@@ -185,8 +184,11 @@ def test_the_readme_states_the_rules_with_the_figures_the_code_uses():
         (config.ROAD_TUNNEL_MAX_M, 1000.0, "A run longer than 1 km is closed by rule"),
         (config.ROAD_TUNNEL_CLASSES, {"motorway", "trunk", "primary", "secondary"},
          "A tunnel on a motorway, trunk, primary or secondary road is judged whole"),
-        (config.FOOT_PERMIT_REQUIRED_RAMP_CLASSES, {"trunk"},
-         "Its slip roads and bridges are closed to them unless the data permits walking by name"),
+        (config.VIADUCT_PERMIT_REQUIRED_CLASSES, {"trunk"},
+         "Its viaducts, runs of bridge longer than 100 m, are closed to them unless the data permits walking by name"),
+        (config.VIADUCT_MIN_M, 100.0, "runs of bridge longer than 100 m"),
+        (config.UNKNOWN_LINK_MAX_M, 50.0, "a run of at most 50 m that joins two streets of the network"),
+        (config.BIKE_PUSH_MAX_GRADE, 0.20, "rises at more than 20% from end to end"),
         (config.CLOSED_LAND_STREET_CLASSES, {"service"}, "Service roads inside the container terminals"),
         ("unknown" in config.NEVER_ROUTABLE_CLASSES, True, "Class `unknown` is dropped."),
         (config.BIKE_PERMIT_REQUIRED_CLASSES, {"footway", "pedestrian", "path"},

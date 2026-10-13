@@ -10,9 +10,9 @@ On foot, Hong Kong is not one network. The walkable streets of this run fall int
 
 | Landmass | Neighbourhoods | Walkable street | Ordered pairs routed |
 |---|---|---|---|
-| Kowloon and the New Territories | 32 | 9,924 km | 992 |
-| Hong Kong Island | 19 | 1,637 km | 342 |
-| Lantau | 5 | 1,033 km | 20 |
+| Kowloon and the New Territories | 32 | 9,928 km | 992 |
+| Hong Kong Island | 19 | 1,639 km | 342 |
+| Lantau | 5 | 1,026 km | 20 |
 
 The other 18 pieces (329 km of street in all, the largest 87 km) hold no neighbourhood of the set and take no part in the pair analysis, though the route finder covers them.
 
@@ -22,38 +22,38 @@ Neighbourhood pairs are routed only within a landmass. That gives 1,354 ordered 
 
 ## The headline
 
-The street network modelled here is 12,995 km long, of which 12,930 km is walkable. It climbs an average of 36.7 m for every kilometre of street. But that average conceals a usable low-elevation network. Across all 1,354 ordered neighbourhood pairs, on foot:
+The street network modelled here is 12,974 km long, of which 12,928 km is walkable. It climbs an average of 36.7 m for every kilometre of street. But that average conceals a usable low-elevation network. Across all 1,354 ordered neighbourhood pairs, on foot:
 
 | Objective | Mean distance | Mean climb | Mean steepest grade | Distance penalty | Climbing avoided |
 |---|---|---|---|---|---|
-| Shortest (distance only) | 11.99 km | 355 m | 42.3% | +0% | 0% |
-| Balanced | 14.93 km | 136 m | 17.1% | +22% | 42% |
-| Flattest (strongly climb-averse) | 14.87 km | 124 m | 25.9% | +20% | 49% |
-| Grade-averse | 16.29 km | 138 m | 16.1% | +35% | 42% |
+| Shortest (distance only) | 11.97 km | 347 m | 41.6% | +0% | 0% |
+| Balanced | 14.87 km | 136 m | 17.3% | +21% | 42% |
+| Flattest (strongly climb-averse) | 14.85 km | 124 m | 25.3% | +20% | 49% |
+| Grade-averse | 16.24 km | 138 m | 16.2% | +35% | 41% |
 
-**About 20% more walking buys about 49% less climbing.** That is the central result. The flattest route, here and below, is the route of the strongly climb-averse objective, which accepts 120 m of extra walking to save one metre of climb: it is on average 20% longer than the shortest one, it avoids 49% of the ascent, and it takes the typical steepest pitch from 42% to 26%.
+**About 20% more walking buys about 49% less climbing.** That is the central result. The flattest route, here and below, is the route of the strongly climb-averse objective, which accepts 120 m of extra walking to save one metre of climb: it is on average 20% longer than the shortest one, it avoids 49% of the ascent, and it takes the typical steepest pitch from 42% to 25%.
 
-It is not the least climbing possible. The sweep of weights behind the trade-off section further down goes on to objectives more climb-averse still, and it holds a route with more than 1 m less climbing than the flattest route for 340 of the 1,354 pairs (49 by more than 5 m, 77 m at most). Taking the least climbing found for every pair would put the climbing avoided at 49.9% where the flattest route gives 48.7%.
+It is not the least climbing possible. The sweep of weights behind the trade-off section further down goes on to objectives more climb-averse still, and it holds a route with more than 1 m less climbing than the flattest route for 376 of the 1,354 pairs (135 by more than 5 m, 77 m at most). Taking the least climbing found for every pair would put the climbing avoided at 49.8% where the flattest route gives 48.6%.
 
 The landmasses do not share that result equally:
 
 | Landmass | Ordered pairs | Shortest route | Flattest route | Extra distance | Climbing avoided | Mean steepest grade |
 |---|---|---|---|---|---|---|
-| Kowloon and the New Territories | 992 | 13.68 km / 383 m | 17.04 km / 124 m | +21% | 50% | 43% to 26% |
-| Hong Kong Island | 342 | 7.08 km / 245 m | 8.65 km / 110 m | +19% | 45% | 40% to 25% |
+| Kowloon and the New Territories | 992 | 13.66 km / 374 m | 17.01 km / 124 m | +21% | 50% | 42% to 25% |
+| Hong Kong Island | 342 | 7.08 km / 242 m | 8.65 km / 110 m | +19% | 44% | 40% to 25% |
 | Lantau | 20 | 11.59 km / 816 m | 13.66 km / 385 m | +17% | 40% | 54% to 42% |
 
 Each route cell is mean distance / mean cumulative climb.
 
 The flat route pays best on Kowloon and the New Territories, where it avoids 50% of the climbing for 21% more distance, and least on Lantau (40% for 17%). The shortest routes climb most on Lantau: 816 m on average.
 
-The grade-averse objective is worth separating out. It climbs more in total than the flattest route (138 m against 124 m) and costs more distance (+35% against +20%), and it brings the mean steepest pitch to 16.1% where the flattest route leaves 25.9%. Total climbing and peak steepness are genuinely different objectives, and a single definition of "flat" cannot serve both: minimising total ascent will happily send you up one short wall, and avoiding walls will make you climb a little more overall.
+The grade-averse objective is worth separating out. It climbs more in total than the flattest route (138 m against 124 m) and costs more distance (+35% against +20%), and it brings the mean steepest pitch to 16.2% where the flattest route leaves 25.3%. Total climbing and peak steepness are genuinely different objectives, and a single definition of "flat" cannot serve both: minimising total ascent will happily send you up one short wall, and avoiding walls will make you climb a little more overall.
 
-A note on the baseline. The shortest pedestrian route minimises distance only, as specified, and a distance-minimising walker takes every stairway and hillside path on the way (the walkable network has 283 km of steps): the mean steepest pitch on a shortest walking route is 42%, and 571 of the 1,354 (42%) reach the model's 60% plausibility ceiling. That is what minimising distance means here, and it is a large part of why the flat alternatives matter.
+A note on the baseline. The shortest pedestrian route minimises distance only, as specified, and a distance-minimising walker takes every stairway and hillside path on the way (the walkable network has 283 km of steps): the mean steepest pitch on a shortest walking route is 42%, and 560 of the 1,354 (41%) reach the model's 60% plausibility ceiling. That is what minimising distance means here, and it is a large part of why the flat alternatives matter.
 
-Much of the baseline's climbing is not on streets at all. 39% of the climbing on the shortest routes is done on hill paths, tracks and steps, which make up 10% of their length; on the flattest routes it is 8% of the climbing and 1% of the length. Few people's shortest walk between two districts goes straight over the hill between them on a path, so part of the climbing the flat route avoids is climbing a walker who keeps to streets would not have done either.
+Much of the baseline's climbing is not on streets at all. 38% of the climbing on the shortest routes is done on hill paths, tracks and steps, which make up 10% of their length; on the flattest routes it is 8% of the climbing and 1% of the length. Few people's shortest walk between two districts goes straight over the hill between them on a path, so part of the climbing the flat route avoids is climbing a walker who keeps to streets would not have done either.
 
-A steep pitch can survive on a *flat* route too: 51% of the flattest routes still include a pitch above 15%. A short stairway costs only a few hundred equivalent metres under the cost model, so when the alternative is a longer detour than that, the model takes the stairs -- which is what a pedestrian does too. The grade-averse objective is the one that refuses them: 23% of its routes include such a pitch.
+A steep pitch can survive on a *flat* route too: 48% of the flattest routes still include a pitch above 15%. A short stairway costs only a few hundred equivalent metres under the cost model, so when the alternative is a longer detour than that, the model takes the stairs -- which is what a pedestrian does too. The grade-averse objective is the one that refuses them: 26% of its routes include such a pitch.
 
 ## Specific answers
 
@@ -69,14 +69,14 @@ A steep pitch can survive on a *flat* route too: 51% of the flattest routes stil
 | Hong Kong Island | North Point | Chai Wan | 6.44 km / 111 m / max 12% | 6.75 km / 92 m / max 12% | 7.19 km / 97 m / max 12% |
 | Hong Kong Island | Pok Fu Lam | Central District | 6.15 km / 230 m / max 60% | 8.87 km / 40 m / max 4% | 8.84 km / 41 m / max 5% |
 | Hong Kong Island | Wong Nai Chung | Jardine's Lookout & Wong Nai Chung Gap | 2.27 km / 156 m / max 16% | 2.27 km / 156 m / max 16% | 4.17 km / 169 m / max 35% |
-| Kowloon and the New Territories | Tsim Sha Tsui | Kowloon Tong | 4.63 km / 42 m / max 17% | 4.74 km / 36 m / max 6% | 4.74 km / 36 m / max 5% |
+| Kowloon and the New Territories | Tsim Sha Tsui | Kowloon Tong | 4.55 km / 65 m / max 23% | 4.96 km / 35 m / max 6% | 4.75 km / 47 m / max 5% |
 | Kowloon and the New Territories | Mong Kok | Kwun Tong (South) | 7.73 km / 48 m / max 28% | 8.06 km / 33 m / max 4% | 8.00 km / 37 m / max 5% |
-| Kowloon and the New Territories | Cheung Sha Wan | Tsz Wan Shan, Diamond Hill & San Po Kong | 5.29 km / 143 m / max 58% | 5.97 km / 32 m / max 8% | 5.92 km / 33 m / max 8% |
-| Kowloon and the New Territories | Hung Hom | Ho Man Tin | 1.90 km / 63 m / max 11% | 3.71 km / 28 m / max 4% | 3.23 km / 35 m / max 5% |
-| Kowloon and the New Territories | Kai Tak | Kwun Tong (North) | 4.49 km / 190 m / max 60% | 5.11 km / 173 m / max 60% | 5.05 km / 174 m / max 60% |
+| Kowloon and the New Territories | Cheung Sha Wan | Tsz Wan Shan, Diamond Hill & San Po Kong | 5.22 km / 142 m / max 58% | 5.97 km / 32 m / max 8% | 5.92 km / 33 m / max 8% |
+| Kowloon and the New Territories | Hung Hom | Ho Man Tin | 1.73 km / 59 m / max 11% | 2.73 km / 35 m / max 10% | 2.80 km / 41 m / max 7% |
+| Kowloon and the New Territories | Kai Tak | Kwun Tong (North) | 4.45 km / 189 m / max 60% | 5.02 km / 173 m / max 60% | 5.02 km / 173 m / max 60% |
 | Kowloon and the New Territories | Shek Kip Mei | Ngau Tau Kok & Kowloon Bay | 5.92 km / 79 m / max 60% | 6.85 km / 14 m / max 2% | 6.61 km / 21 m / max 6% |
 | Kowloon and the New Territories | Kowloon Tong | Sha Tin | 7.31 km / 509 m / max 60% | 12.63 km / 165 m / max 11% | 12.44 km / 170 m / max 11% |
-| Kowloon and the New Territories | Kwai Chung | Sha Tin | 9.31 km / 498 m / max 60% | 14.33 km / 178 m / max 56% | 16.78 km / 184 m / max 11% |
+| Kowloon and the New Territories | Kwai Chung | Sha Tin | 9.31 km / 498 m / max 60% | 14.10 km / 176 m / max 56% | 15.13 km / 183 m / max 22% |
 | Kowloon and the New Territories | Tsuen Wan | Tsing Yi | 3.90 km / 39 m / max 60% | 4.51 km / 28 m / max 60% | 4.13 km / 32 m / max 60% |
 | Kowloon and the New Territories | Tseung Kwan O | Kwun Tong (South) | 5.70 km / 236 m / max 60% | 6.28 km / 174 m / max 50% | 8.42 km / 181 m / max 17% |
 | Kowloon and the New Territories | Sha Tin | Tai Po | 10.06 km / 589 m / max 60% | 11.34 km / 22 m / max 16% | 11.28 km / 25 m / max 10% |
@@ -90,60 +90,60 @@ The neighbourhood pairs where choosing the flat route avoids the most climbing (
 
 | From | To | Shortest | Flattest | Climbing avoided | Metres of climb saved per extra metre walked |
 |---|---|---|---|---|---|
-| Sai Kung Town | Tin Shui Wai | 36.73 km / 1933 m | 53.76 km / 268 m | 1665 m | 0.10 |
-| Sai Kung Town | Yuen Long | 32.98 km / 1911 m | 49.92 km / 257 m | 1654 m | 0.10 |
-| Tseung Kwan O | Tin Shui Wai | 40.78 km / 1899 m | 51.13 km / 375 m | 1524 m | 0.15 |
-| Yuen Long | Tseung Kwan O | 37.03 km / 1878 m | 51.00 km / 379 m | 1499 m | 0.11 |
-| Tin Shui Wai | Kwun Tong (North) | 36.30 km / 1849 m | 45.52 km / 396 m | 1453 m | 0.16 |
-| Tin Shui Wai | Ngau Chi Wan | 33.80 km / 1729 m | 42.84 km / 281 m | 1448 m | 0.16 |
-| Yuen Long | Kwun Tong (North) | 32.54 km / 1828 m | 45.40 km / 400 m | 1428 m | 0.11 |
-| Tsz Wan Shan, Diamond Hill & San Po Kong | Tin Shui Wai | 31.47 km / 1647 m | 41.79 km / 220 m | 1428 m | 0.14 |
+| Tin Shui Wai | Sai Kung Town | 36.62 km / 1928 m | 53.76 km / 266 m | 1662 m | 0.10 |
+| Yuen Long | Sai Kung Town | 32.87 km / 1907 m | 49.92 km / 257 m | 1650 m | 0.10 |
+| Tin Shui Wai | Tsz Wan Shan, Diamond Hill & San Po Kong | 31.47 km / 1667 m | 41.79 km / 239 m | 1428 m | 0.14 |
+| Yuen Long | Tsz Wan Shan, Diamond Hill & San Po Kong | 27.72 km / 1647 m | 41.67 km / 243 m | 1403 m | 0.10 |
+| Tin Shui Wai | Sha Tin | 27.11 km / 1314 m | 41.33 km / 129 m | 1185 m | 0.08 |
+| Sha Tin | Yuen Long | 23.36 km / 1292 m | 37.49 km / 119 m | 1173 m | 0.08 |
+| Ma On Shan | Tin Shui Wai | 31.85 km / 1293 m | 42.57 km / 136 m | 1157 m | 0.11 |
+| Yuen Long | Ma On Shan | 28.10 km / 1280 m | 38.73 km / 134 m | 1146 m | 0.11 |
 
 ### And where does it not?
 
-For 190 of the 1,354 ordered pairs (14%) the flattest route avoids less than 5 m of climbing. In 60 of those the shortest route is already nearly level (under 10 m of climb); in the other 130 the climb is there and the flattest route does not get round it. Nor, for 122 of them, does any route of the wider sweep of weights described further down; for the other 8 one of its routes does avoid 5 m or more (12 m at most).
+For 190 of the 1,354 ordered pairs (14%) the flattest route avoids less than 5 m of climbing. In 61 of those the shortest route is already nearly level (under 10 m of climb); in the other 129 the climb is there and the flattest route does not get round it. Nor, for 123 of them, does any route of the wider sweep of weights described further down; for the other 6 one of its routes does avoid 5 m or more (12 m at most).
 
 Neighbourhood by neighbourhood, over every trip that starts or ends there, the 5 that gain most from flat routing and the 5 that gain least:
 
 | Neighbourhood | Landmass | Mean climb, shortest | Mean climb, flattest | Climbing avoided | Extra distance |
 |---|---|---|---|---|---|
-| Fanling / Sheung Shui | Kowloon and the New Territories | 1021 m | 215 m | 79% | +33% |
-| Tin Shui Wai | Kowloon and the New Territories | 924 m | 199 m | 78% | +30% |
-| Yuen Long | Kowloon and the New Territories | 919 m | 200 m | 78% | +45% |
-| Tai Po | Kowloon and the New Territories | 809 m | 186 m | 77% | +41% |
-| Tsuen Wan | Kowloon and the New Territories | 349 m | 95 m | 73% | +25% |
+| Fanling / Sheung Shui | Kowloon and the New Territories | 1022 m | 215 m | 79% | +33% |
+| Tin Shui Wai | Kowloon and the New Territories | 871 m | 199 m | 77% | +30% |
+| Tai Po | Kowloon and the New Territories | 811 m | 186 m | 77% | +41% |
+| Yuen Long | Kowloon and the New Territories | 865 m | 200 m | 77% | +45% |
+| Tsuen Wan | Kowloon and the New Territories | 308 m | 91 m | 70% | +26% |
 | Mid-Levels West | Hong Kong Island | 200 m | 107 m | 46% | +8% |
 | Discovery Bay | Lantau | 794 m | 441 m | 44% | +25% |
 | Shouson Hill & Repulse Bay | Hong Kong Island | 278 m | 162 m | 42% | +8% |
-| The Peak Area | Hong Kong Island | 278 m | 175 m | 37% | +9% |
 | South Lantau Coast | Lantau | 532 m | 362 m | 32% | +3% |
+| The Peak Area | Hong Kong Island | 251 m | 175 m | 30% | +10% |
 
 ## The corridors flat routes use
 
-These were *discovered*, not listed: the analysis aggregated how often each street segment carried a climb-averse route between neighbourhoods, weighted by the climbing those routes avoided, and merged the high-scoring segments into contiguous corridors. No corridor was named in advance. A corridor is named by the streets that make up most of it, and it can only serve pairs on its own landmass. A street qualifies by being used and by being gentle itself (a mean gradient of 5.5% at most), not by being low: a corridor may be on low ground, a level road high on a hillside, or simply the least steep way over a ridge, and the last part of this section says how many are which. Climb per km is the mean of the two directions of travel. This run found 89 walking corridors, 156 km in all.
+These were *discovered*, not listed: the analysis aggregated how often each street segment carried a climb-averse route between neighbourhoods, weighted by the climbing those routes avoided, and merged the high-scoring segments into contiguous corridors. No corridor was named in advance. A corridor is named by the streets that make up most of it, and it can only serve pairs on its own landmass. A street qualifies by being used and by being gentle itself (a mean gradient of 5.5% at most), not by being low: a corridor may be on low ground, a level road high on a hillside, or simply the least steep way over a ridge, and the last part of this section says how many are which. Climb per km is the mean of the two directions of travel. This run found 86 walking corridors, 158 km in all.
 
 ### Kowloon and the New Territories
 
-56 corridors, 106.8 km; the 8 most important:
+54 corridors, 109.0 km; the 8 most important:
 
 | Corridor | Length | Mean grade | Climb per km | Pairs served | Neighbourhoods linked | Elevation | Runs through |
 |---|---|---|---|---|---|---|---|
-| Lai Chi Kok Road - Container Port Road South - Kwai Tai Road - Kwai Chung Road | 10.9 km | 0.3% | 2.2 m | 319 | 32 | 4-9 mPD | Cheung Sha Wan, Kwai Chung, Lai Chi Kok and South West Kowloon |
-| Shui Chong Street - Sui Cheung Street - Science Park Road - Kiu Ha Road | 14.9 km | 0.2% | 1.8 m | 167 | 32 | 4-8 mPD | Sha Tin and Tai Po |
-| Yuen Wo Road - Tsuen Nam Road - Sha Tin Centre Street - Yi Ching Lane | 4.7 km | 0.4% | 2.8 m | 221 | 32 | 4-8 mPD | Sha Tin |
+| Lai Chi Kok Road - Container Port Road South - Kwai Chung Road - Kwai Tai Road | 10.8 km | 0.2% | 1.8 m | 319 | 32 | 4-7 mPD | Cheung Sha Wan, Kwai Chung, Lai Chi Kok and South West Kowloon |
+| Shui Chong Street - Sui Cheung Street - Science Park Road - Kiu Ha Road | 14.9 km | 0.2% | 1.8 m | 169 | 32 | 4-8 mPD | Sha Tin and Tai Po |
+| Yuen Wo Road - Tsuen Nam Road - Sha Tin Centre Street - Yi Ching Lane | 4.7 km | 0.4% | 2.8 m | 223 | 32 | 4-8 mPD | Sha Tin |
 | Castle Peak Road – Castle Peak Bay - Castle Peak Road – Tai Lam - Castle Peak Road – So Kwun Wat | 5.4 km | 1.0% | 5.7 m | 153 | 30 | 4-22 mPD | Tuen Mun |
-| Tai Po Road – Sha Tin Heights - Tai Po Road – Piper's Hill - Tai Po Road - Wilson Trail Section 6 | 5.0 km | 3.2% | 17.4 m | 221 | 30 | 62-158 mPD, a way over high ground | Cheung Sha Wan and Sha Tin |
+| Tai Po Road – Sha Tin Heights - Tai Po Road – Piper's Hill - Tai Po Road - Wilson Trail Section 6 | 5.0 km | 3.2% | 17.4 m | 223 | 30 | 62-158 mPD, a way over high ground | Cheung Sha Wan and Sha Tin |
 | Castle Peak Road – Ting Kau - Hoi On Road - Castle Peak Road – New Ting Kau | 7.9 km | 1.4% | 7.9 m | 196 | 32 | 4-32 mPD | Tsuen Wan and Tsuen Wan West |
 | Boundary Street - Sai Yeung Choi Street North - Earl Street | 2.0 km | 0.6% | 2.9 m | 358 | 30 | 5-14 mPD | Cheung Sha Wan, Ho Man Tin, Kowloon Tong and 2 more |
 | Castle Peak Road – Tsing Lung Tau - Castle Peak Road – Sham Tseng - Sham Tseng Interchange - Castle Peak Road – Tai Lam | 7.6 km | 1.0% | 6.9 m | 197 | 32 | 4-20 mPD | Tsuen Wan West |
 
-**Lai Chi Kok Road - Container Port Road South - Kwai Tai Road - Kwai Chung Road** (10.9 km, 0.3% mean gradient) is the most important flat corridor on Kowloon and the New Territories. Its busiest block carries a climb-averse route for 319 of the landmass's 992 ordered pairs. The flattest routes of 332 ordered pairs run along some part of it, and between them those routes climb 112.7 km less than the shortest routes for the same pairs. It stays between 4 and 9 mPD and runs through Cheung Sha Wan, Kwai Chung, Lai Chi Kok and South West Kowloon.
+**Lai Chi Kok Road - Container Port Road South - Kwai Chung Road - Kwai Tai Road** (10.8 km, 0.2% mean gradient) is the most important flat corridor on Kowloon and the New Territories. Its busiest block carries a climb-averse route for 319 of the landmass's 992 ordered pairs. The flattest routes of 332 ordered pairs run along some part of it, and between them those routes climb 101.4 km less than the shortest routes for the same pairs. It stays between 4 and 7 mPD and runs through Cheung Sha Wan, Kwai Chung, Lai Chi Kok and South West Kowloon.
 
-**Shui Chong Street - Sui Cheung Street - Science Park Road - Kiu Ha Road** (14.9 km, 0.2%, 167 pairs, 4-8 mPD) is the second.
+**Shui Chong Street - Sui Cheung Street - Science Park Road - Kiu Ha Road** (14.9 km, 0.2%, 169 pairs, 4-8 mPD) is the second.
 
 ### Hong Kong Island
 
-23 corridors, 34.0 km; the 8 most important:
+22 corridors, 33.6 km; the 8 most important:
 
 | Corridor | Length | Mean grade | Climb per km | Pairs served | Neighbourhoods linked | Elevation | Runs through |
 |---|---|---|---|---|---|---|---|
@@ -181,7 +181,7 @@ These were *discovered*, not listed: the analysis aggregated how often each stre
 
 ### Low ground, contour roads and ways over
 
-For scale: the walkable network as a whole climbs 36.7 m per kilometre of street, and these corridors 3.7 m at the median. 51 of the 89 lie wholly below 15 mPD, 88 km of the 156 km: flat because the ground is. 12 never drop below 50 mPD. 6 of those hold a mean gradient of 2% or less: level routes kept high on a hillside rather than on low ground.
+For scale: the walkable network as a whole climbs 36.7 m per kilometre of street, and these corridors 3.5 m at the median. 51 of the 86 lie wholly below 15 mPD, 91 km of the 158 km: flat because the ground is. 11 never drop below 50 mPD. 6 of those hold a mean gradient of 2% or less: level routes kept high on a hillside rather than on low ground.
 
 | Corridor | Landmass | Length | Mean grade | Climb per km | Elevation | Pairs served |
 |---|---|---|---|---|---|---|
@@ -192,15 +192,14 @@ For scale: the walkable network as a whole climbs 36.7 m per kilometre of street
 | Tai Hang Road | Hong Kong Island | 0.5 km | 0.2% | 1.3 m | 122-123 mPD | 22 |
 | South Lantau Road - Keung Shan Road | Lantau | 1.0 km | 0.9% | 5.9 m | 56-61 mPD | 4 |
 
-The other 6 are neither level nor low. Their mean gradient is 3.2% to 5.1%, and they are in the list because the climb-averse routes between the places they join use them: each is the gentlest way up or over high ground that those routes found, which is a different thing from a flat street.
+The other 5 are neither level nor low. Their mean gradient is 3.2% to 5.1%, and they are in the list because the climb-averse routes between the places they join use them: each is the gentlest way up or over high ground that those routes found, which is a different thing from a flat street.
 
 | Corridor | Landmass | Length | Mean grade | Climb per km | Elevation | Pairs served |
 |---|---|---|---|---|---|---|
-| Tai Po Road – Sha Tin Heights - Tai Po Road – Piper's Hill - Tai Po Road - Wilson Trail Section 6 | Kowloon and the New Territories | 5.0 km | 3.2% | 17.4 m | 62-158 mPD | 221 |
+| Tai Po Road – Sha Tin Heights - Tai Po Road – Piper's Hill - Tai Po Road - Wilson Trail Section 6 | Kowloon and the New Territories | 5.0 km | 3.2% | 17.4 m | 62-158 mPD | 223 |
 | Repulse Bay Road | Hong Kong Island | 1.7 km | 5.1% | 25.5 m | 97-184 mPD | 47 |
 | Stubbs Road | Hong Kong Island | 0.4 km | 4.9% | 24.5 m | 89-110 mPD | 65 |
 | Stanley Gap Road | Hong Kong Island | 0.8 km | 5.0% | 25.1 m | 57-112 mPD | 18 |
-| On Sau Road | Kowloon and the New Territories | 0.4 km | 4.1% | 20.4 m | 163-178 mPD | 65 |
 | Stubbs Road | Hong Kong Island | 0.4 km | 5.1% | 25.5 m | 218-240 mPD | 21 |
 
 ## Passes, saddles and barriers
@@ -295,36 +294,36 @@ The divide that binds most pairs is Lantau Trail Section 8, near South Lantau Co
 
 ### Barriers with an alternative, and barriers without
 
-A steep street or path that carries heavy shortest-path traffic but almost none once climbing is penalised has a flat alternative nearby. One that keeps its traffic under every objective does not. Of the 400 highest-scoring barrier segments kept, 362 are avoidable (the flat routes keep under 15% of the traffic), 10 are unavoidable (over 50%) and the rest fall between. 343 of the 400 are not streets but footpaths, hill paths, tracks and flights of steps, which is where a distance-minimising route does its steepest climbing; 323 of those are avoidable.
+A steep street or path that carries heavy shortest-path traffic but almost none once climbing is penalised has a flat alternative nearby. One that keeps its traffic under every objective does not. Of the 400 highest-scoring barrier segments kept, 360 are avoidable (the flat routes keep under 15% of the traffic), 10 are unavoidable (over 50%) and the rest fall between. 343 of the 400 are not streets but footpaths, hill paths, tracks and flights of steps, which is where a distance-minimising route does its steepest climbing; 323 of those are avoidable.
 
 | Street or path | Where | Gradient | Pairs via shortest route | Still via the flat route | Verdict |
 |---|---|---|---|---|---|
-| 牛乸 (hill path) | 3 km from Tsuen Wan | 49.3% | 58 | 0 | avoidable |
-| (unnamed hill path) | 3 km from Tsuen Wan | 52.6% | 58 | 0 | avoidable |
-| (unnamed footpath) | near Tsuen Wan | 36.2% | 62 | 0 | avoidable |
-| 喵喵脊 (hill path) | 3 km from Tai Po | 60.0% | 24 | 0 | avoidable |
+| 牛乸 (hill path) | 3 km from Tsuen Wan | 49.3% | 70 | 0 | avoidable |
+| (unnamed hill path) | 3 km from Tsuen Wan | 52.6% | 70 | 0 | avoidable |
+| (unnamed footpath) | near Tsuen Wan | 36.2% | 74 | 0 | avoidable |
 | 打鐵屻脊 (hill path) | Tai Po | 53.8% | 52 | 0 | avoidable |
 | 獅紅古道 (footpath) | near Wang Tau Hom & Tung Tau | 49.3% | 34 | 0 | avoidable |
-| 四方山南脊 (hill path) | 2 km from Tai Po | 51.4% | 18 | 0 | avoidable |
-| (unnamed hill path) | near Tai Po | 45.8% | 52 | 0 | avoidable |
-| (unnamed footpath) | 2 km from Tsuen Wan | 48.1% | 58 | 0 | avoidable |
-| (unnamed footpath) | 1 km from Tsuen Wan | 27.9% | 58 | 0 | avoidable |
+| 喵喵脊 (hill path) | 3 km from Tai Po | 60.0% | 16 | 0 | avoidable |
+| (unnamed footpath) | 2 km from Tsuen Wan | 48.1% | 70 | 0 | avoidable |
+| (unnamed footpath) | 1 km from Tsuen Wan | 27.9% | 70 | 0 | avoidable |
+| (unnamed hill path) | 2 km from Tsuen Wan | 52.0% | 70 | 0 | avoidable |
+| 慈沙古道 (footpath) | near Sha Tin | 37.1% | 46 | 0 | avoidable |
 
-The highest-scoring of the unavoidable ones: On Kin Road, Kwun Tong (North) (13%, 56 pairs); (unnamed hill path), Stanley (46%, 28 pairs); (unnamed footpath), Kwun Tong (North) (60%, 46 pairs); (unnamed steps), Tseung Kwan O (60%, 12 pairs); Castle Peak Road – Tai Lam, near Tuen Mun (39%, 54 pairs).
+The highest-scoring of the unavoidable ones: On Kin Road, Kwun Tong (North) (13%, 56 pairs); (unnamed hill path), Stanley (46%, 28 pairs); (unnamed steps), Tseung Kwan O (60%, 14 pairs); (unnamed footpath), Kwun Tong (North) (60%, 46 pairs); Castle Peak Road – Tai Lam, near Tuen Mun (39%, 54 pairs).
 
 ### The lowland basins
 
-Street below 15 mPD forms 80 separate basins of at least 2 km, 5,683 km in all: the flat districts, each named here by the neighbourhoods with most of its street. The largest:
+Street below 15 mPD forms 80 separate basins of at least 2 km, 5,675 km in all: the flat districts, each named here by the neighbourhoods with most of its street. The largest:
 
 | Basin | Street below the threshold |
 |---|---|
-| Tuen Mun / Yuen Long / Tin Shui Wai | 1,446 km |
+| Tuen Mun / Yuen Long / Tin Shui Wai | 1,447 km |
 | South West Kowloon / Tsuen Wan / Kai Tak | 1,378 km |
-| Sha Tin / Tai Po / Ma On Shan | 758 km |
-| Wan Chai / Central District / North Point | 443 km |
+| Sha Tin / Tai Po / Ma On Shan | 755 km |
+| Wan Chai / Central District / North Point | 444 km |
 | Fanling / Sheung Shui | 327 km |
-| Tseung Kwan O | 235 km |
-| Tung Chung Town Centre Area | 218 km |
+| Tseung Kwan O | 236 km |
+| Tung Chung Town Centre Area | 210 km |
 | Chai Wan | 73 km |
 
 Leaving one basin for the next means climbing at least this high. Each row is the crest at which two groups of basins first join, lowest first:
@@ -346,14 +345,14 @@ Leaving one basin for the next means climbing at least this high. Each row is th
 
 For every one of the 1,354 ordered pairs, a single weight scales the climbing and gradient terms of the balanced objective from zero (pure distance) to 15 times their size, and the strongly climb-averse objective of the tables above is added as one more point. The sweep runs past that objective: at its far end a metre of climb is priced at 210 m of walking, against 120 m. The routes found trace the frontier between distance, cumulative climbing and peak gradient, and "the least-climbing route" below is the one with the least climbing anywhere in the sweep. The useful question is where the knee is: how much detour buys how much of the climbing.
 
-- **54% of pairs can halve their climbing** by some route, and the median detour that costs is **12%**. 24% of all pairs can halve it within a 10% detour, 36% within 20%.
-- Taken to the least-climbing route, the median pair sheds **56%** of its climbing for a median **16%** more distance.
+- **53% of pairs can halve their climbing** by some route, and the median detour that costs is **13%**. 22% of all pairs can halve it within a 10% detour, 35% within 20%.
+- Taken to the least-climbing route, the median pair sheds **55%** of its climbing for a median **16%** more distance.
 
 | Landmass | Pairs that can halve their climbing | Median detour to halve it | Median saving on the least-climbing route | Median extra distance |
 |---|---|---|---|---|
-| Kowloon and the New Territories | 55% | 13% | 57% | 18% |
-| Hong Kong Island | 50% | 10% | 50% | 11% |
-| Lantau | 50% | 14% | 53% | 15% |
+| Kowloon and the New Territories | 55% | 14% | 56% | 17% |
+| Hong Kong Island | 49% | 10% | 50% | 11% |
+| Lantau | 50% | 14% | 53% | 14% |
 
 The frontiers of a few pairs in detail. Each table lists, shortest first, the routes that no other route of the sweep beats on both distance and climbing, so climbing falls as distance rises. The frontier file keeps more: a route also stays in it for lowering the steepest gradient, even where it climbs more than a shorter one.
 
@@ -375,11 +374,12 @@ The frontiers of a few pairs in detail. Each table lists, shortest first, the ro
 
 | Distance | Climb | Steepest grade |
 |---|---|---|
-| 4.63 km | 42 m | 17% |
-| 4.72 km | 38 m | 9% |
-| 4.73 km | 37 m | 5% |
-| 4.74 km | 36 m | 5% |
-| 5.82 km | 32 m | 4% |
+| 4.55 km | 65 m | 23% |
+| 4.74 km | 47 m | 7% |
+| 4.83 km | 37 m | 5% |
+| 4.84 km | 36 m | 5% |
+| 4.96 km | 35 m | 6% |
+| 5.73 km | 32 m | 4% |
 
 **Mong Kok to Kwun Tong (South)** (Kowloon and the New Territories)
 
@@ -392,15 +392,15 @@ The frontiers of a few pairs in detail. Each table lists, shortest first, the ro
 | 8.05 km | 35 m | 4% |
 | 8.06 km | 33 m | 4% |
 
-How are the frontiers shaped? Take the least-climbing route's extra distance and its saving as the whole of what is on offer. Over the 1,172 pairs with at least 5 m to save, half of that extra distance buys 55% of the saving at the median, and more than half of it for 53% of pairs. The frontiers are close to straight: climbing comes off roughly in proportion to the extra distance, with no sharp knee. The balanced objective takes +22% distance for 42% of the climbing, against +20% for 49% on the strongly climb-averse one, and it holds the mean steepest pitch to 17% against 26%.
+How are the frontiers shaped? Take the least-climbing route's extra distance and its saving as the whole of what is on offer. Over the 1,170 pairs with at least 5 m to save, half of that extra distance buys 53% of the saving at the median, and more than half of it for 52% of pairs. The frontiers are close to straight: climbing comes off roughly in proportion to the extra distance, with no sharp knee. The balanced objective takes +21% distance for 42% of the climbing, against +20% for 49% on the strongly climb-averse one, and it holds the mean steepest pitch to 17% against 25%.
 
 ## Walking is not cycling
 
-The two networks are modelled separately, and they are not interchangeable. Of the 12,930 km a walker may use, a bicycle may be ridden on 5,033 km. The 283 km of steps are a genuine part of the pedestrian network and no use on a bicycle; the bicycle graph excludes them outright. Ways of class footway, path and pedestrian are open to bicycles only where the data permits them by name, because riding on a footpath is not allowed: that keeps 71 km of the 7,537 km a walker has of them. A further 45 km of them, in runs of at most 50 m that join two parts of the cycling network, is open to a bicycle pushed on foot, at 3 times its length. Bicycle costs also carry stress weights by road class (from 0.85 of its length on a cycleway to 1.9 on a trunk road) and respect one-way restrictions, which pedestrians do not.
+The two networks are modelled separately, and they are not interchangeable. Of the 12,928 km a walker may use, a bicycle may be ridden on 5,014 km. The 283 km of steps are a genuine part of the pedestrian network and no use on a bicycle; the bicycle graph excludes them outright. Ways of class footway, path and pedestrian are open to bicycles only where the data permits them by name, because riding on a footpath is not allowed: that keeps 71 km of the 7,535 km a walker has of them. A further 45 km of them, in runs of at most 50 m that join two parts of the cycling network, is open to a bicycle pushed on foot, at 3 times its length. Bicycle costs also carry stress weights by road class (from 0.85 of its length on a cycleway to 1.9 on a trunk road) and respect one-way restrictions, which pedestrians do not.
 
-On foot 1,354 ordered pairs have a route; by bicycle 1,346, so 8 pairs can be walked but not ridden. Over the 1,346 pairs both can make, the flattest bicycle route averages 16.00 km and 142 m of climbing against 14.86 km and 123 m on foot, a difference of +8% in distance and +16% in climbing.
+On foot 1,354 ordered pairs have a route; by bicycle 1,346, so 8 pairs can be walked but not ridden. Over the 1,346 pairs both can make, the flattest bicycle route averages 15.99 km and 142 m of climbing against 14.85 km and 122 m on foot, a difference of +8% in distance and +16% in climbing.
 
-By bicycle the flattest route is not always the one that climbs least. Its objective weighs road class as well as climbing, and for 77 of the 1,346 pairs it climbs more than the shortest route does, by 10 m at most: a calmer road taken at the price of a little height.
+By bicycle the flattest route is not always the one that climbs least. Its objective weighs road class as well as climbing, and for 78 of the 1,346 pairs it climbs more than the shortest route does, by 10 m at most: a calmer road taken at the price of a little height.
 
 The pairs where the bicycle goes furthest out of the walker's way: Ngau Tau Kok & Kowloon Bay to Ngau Chi Wan (10.1 km against 1.7 km); Ngau Tau Kok & Kowloon Bay to Tsz Wan Shan, Diamond Hill & San Po Kong (8.6 km against 2.7 km); Mid-Levels West to Sai Ying Pun & Sheung Wan (2.8 km against 1.0 km).
 
@@ -408,12 +408,12 @@ The landmasses differ too: the neighbourhoods fall into 4 separate groups by bic
 
 ## What this analysis does not tell you
 
-- **Elevation is the ground, not the deck.** The terrain model is bare earth: it has no footbridges, flyovers, elevated walkways or tunnels in it. Every stretch flagged as one (472 km of the walkable network, 4%) is given a straight ramp between the ground at its two ends, so a footbridge counts as level and the climb to its deck and down again is not counted, while a bridge the map does not flag is sampled from the ground beneath it.
+- **Elevation is the ground, not the deck.** The terrain model is bare earth: it has no footbridges, flyovers, elevated walkways or tunnels in it. Every stretch flagged as one (468 km of the walkable network, 4%) is given a straight ramp between the ground at its two ends, so a footbridge counts as level and the climb to its deck and down again is not counted, while a bridge the map does not flag is sampled from the ground beneath it.
 - **Escalators and lifts are not modelled.** A route's climb is the climb of the ground it covers, whether or not something would carry you up it. The 283 km of steps are all charged as stairs (at 1.6 times their length): the model has no notion of an escalator, a lift or a moving walkway.
-- **Travel is modelled on street centrelines, with selected sidewalks.** Mapped sidewalks and crossings are kept only where the centreline network needs them to stay connected (798 km here); taking them all would represent every street two or three times and wreck the corridor aggregation. Pedestrian distances are therefore block-scale, not door-to-door, and the model lets a walker cross a street at any junction, including where the real crossing is a footbridge or a subway some way along.
+- **Travel is modelled on street centrelines, with selected sidewalks.** Mapped sidewalks and crossings are kept only where the centreline network needs them to stay connected (796 km here); taking them all would represent every street two or three times and wreck the corridor aggregation. Pedestrian distances are therefore block-scale, not door-to-door, and the model lets a walker cross a street at any junction, including where the real crossing is a footbridge or a subway some way along.
 - **The terrain is the ground of early 2020.** The LiDAR survey was flown between December 2019 and February 2020. Ground formed or reshaped since -- new reclamation, a road cut into a slope -- is missing from it or wrong in it, and a street mapped since then is sampled from the ground as it was.
 - **One access point per planning area.** Each neighbourhood is represented by a single street-network-weighted, intersection-snapped point. It is taken within 10 m of the median height of the area's ordinary streets, because a planning area here typically runs from the waterfront up the hillside behind it and one point cannot stand for both. A trip to the upper streets of such an area climbs more than the figures here say. The planning areas in this run range from 0.5 to 27.8 km2, and the largest -- Sha Tin (27.8 km2), South Lantau Coast (24.6 km2) and Tai Po (24.4 km2) -- are served worse by one point than the compact ones. 12 access points lie more than 400 m from their polygon's centroid.
-- **The planning areas do not tile the territory.** 5,518 km of the walkable network (43%) lies in no planning area of the set: countryside, most of which is in no plan, and districts whose plans were not taken as neighbourhoods. Those streets are routed over like any others, but no trip starts or ends on them, and a pass or barrier there is located by the nearest planning area.
+- **The planning areas do not tile the territory.** 5,508 km of the walkable network (43%) lies in no planning area of the set: countryside, most of which is in no plan, and districts whose plans were not taken as neighbourhoods. Those streets are routed over like any others, but no trip starts or ends on them, and a pass or barrier there is located by the nearest planning area.
 - **No ferries and no railways.** The network is streets and paths only, so two landmasses that a ferry or a train joins are simply unconnected here: the report has no cross-harbour route rather than one with a ferry leg.
 - **No traffic, surface quality, signals or safety.** The bicycle stress weights are a crude proxy for road class, not a level-of-traffic-stress model, and nothing here accounts for signal delay, crowding, pavement condition or collision risk.
 - **Access rules are OpenStreetMap's.** Whether a way is open to walkers or to bicycles is read from OpenStreetMap tagging through Overture Maps, with the conservative defaults described above; no official register of footpaths, cycle tracks or prohibited zones was used.

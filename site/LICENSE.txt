@@ -88,9 +88,10 @@ redistributed by this project carries its own terms (as read 2026-10-13):
     Maps and are (c) OpenStreetMap contributors, licensed ODbL 1.0
     (https://opendatacommons.org/licenses/odbl/1-0/). Overture's extract
     for Hong Kong also holds 2,148 road segments that it takes from TomTom
-    (ODbL 1.0 as well); all of them are of class "unknown", which this
-    project does not route on, so no TomTom record is in the network or in
-    anything derived from it. Derived street geometry in this repository
+    (ODbL 1.0 as well); all of them are of class "unknown", of which this
+    project keeps only links of at most 50 m between two streets, so a
+    few kilometres of the network, in pieces of that size, are TomTom's.
+    Derived street geometry in this repository
     -- outputs/*.geojson, outputs/flat_corridors.*, outputs/*.csv, the two
     HTML pages under outputs/ and site/data/graph-*.bin.gz -- is a Derived
     Database under the ODbL and carries its share-alike obligations: it is

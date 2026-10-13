@@ -118,6 +118,8 @@
     .replace(/[’']/g, "")
     .replace(/[^\p{L}\p{N}\s]/gu, " ")
     .replace(/\s+/g, " ").trim()
+    // "the peak tower" and "peak tower" are one name
+    .replace(/^the (?=\S)/, "")
     .split(" ").map((w) => ABBREV[w] || w).join(" ");
   const CJK = /[⺀-鿿豈-﫿]/;
   const hasCJK = (s) => CJK.test(s);

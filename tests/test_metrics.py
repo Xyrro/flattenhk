@@ -254,6 +254,24 @@ def test_pushed_links_reach_the_directed_table(scratch_outputs):
     assert und["bike_push"].tolist() == [True, False]
 
 
+def test_a_pushed_link_as_steep_as_stairs_is_not_ridden_or_pushed(scratch_outputs):
+    """A "footway" that climbs 12 m in 40 m is a flight of steps the map did
+    not class as one: a bicycle is not pushed up it, though one is pushed
+    along the level link beside it and ridden along a street as steep."""
+    from hk_flat_routes.config import BIKE_PUSH_MAX_GRADE
+    from hk_flat_routes.metrics import compute_edge_metrics
+    edges, profiles = _two_edges(bike_push=[True, True])
+    dist = profiles[0][0]
+    profiles[0] = (dist, (5.0 + 0.30 * dist).astype("float32"))
+    assert BIKE_PUSH_MAX_GRADE < 0.30
+    _und, directed = compute_edge_metrics(edges, profiles, force=True)
+    ok = directed.set_index(["edge_id", "direction"])["bike_traversable"].to_dict()
+    assert ok == {(0, "fwd"): False, (0, "rev"): False, (1, "fwd"): True, (1, "rev"): True}
+    edges, _ = _two_edges(bike_push=[False, False])
+    _und, directed = compute_edge_metrics(edges, profiles, force=True)
+    assert directed["bike_traversable"].all()
+
+
 def test_an_edge_table_without_pushed_links_gives_a_column_of_false(scratch_outputs):
     from hk_flat_routes.metrics import compute_edge_metrics
     edges, profiles = _two_edges()

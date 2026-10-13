@@ -407,15 +407,24 @@ NEVER_ROUTABLE_CLASSES = frozenset({
     # rail/water subtypes are filtered by subtype, these are belt-and-braces
     "light_rail", "subway", "tram", "standard_gauge", "funicular", "rail",
     # Upstream routes over ``unknown``.  In Hong Kong's extract the class
-    # holds 2,633 segments of two kinds, neither of them a street anyone can
-    # be sent along: OpenStreetMap ways tagged ``highway=construction`` with
-    # nothing to say what is being built (the planned roads of Kwu Tung
-    # North and Hung Shui Kiu; Overture sets ``is_under_construction`` only
-    # when the future class is given), and segments whose one source is
-    # TomTom, which carry no name, no flag and no access rule to judge them
-    # by.  Together they were 174 km of the routable network.
+    # holds 2,633 segments of two kinds: OpenStreetMap ways tagged
+    # ``highway=construction`` with nothing to say what is being built (the
+    # planned roads of Kwu Tung North and Hung Shui Kiu; Overture sets
+    # ``is_under_construction`` only when the future class is given), and
+    # segments whose one source is TomTom, which carry no name, no flag and
+    # no access rule to judge them by.  Together they were 174 km of the
+    # routable network.  The one kind kept is the short connector: see
+    # ``UNKNOWN_LINK_MAX_M``.
     "unknown",
 })
+#: A segment of class ``unknown`` no longer than this (m) that joins two
+#: streets of the network is kept, as a service road.  Dropping the class
+#: outright also took out some fifty stubs of ten metres or so between an
+#: estate road and the street outside, most of them TomTom's, and the walk
+#: from a bus terminus to the block beside it became a walk round the
+#: estate (Loong Fung Terrace to The Legend, 370 m, became 2 km).  A road
+#: under construction is hundreds of metres long and stays out.
+UNKNOWN_LINK_MAX_M = 50.0
 
 #: Subclasses excluded from the routable graph for *both* modes.
 NEVER_ROUTABLE_SUBCLASSES = frozenset({"driveway", "parking_aisle"})
@@ -459,41 +468,36 @@ ROAD_TUNNEL_MAX_M = 1000.0
 #: of Ching Cheung Road and a 70 m stub of the Central Kowloon Bypass.
 ROAD_TUNNEL_TUBE_GAP_M = 60.0
 
-#: Classes whose slip roads and bridges a walker may use only where the data
-#: permits walking by name.  OpenStreetMap bars walkers from most of Hong
-#: Kong's trunk roads (from 89 of the 120 km that is slip road or viaduct),
-#: but leaves the rest untagged, single-lane ramps of interchanges among
-#: them, and an open viaduct is level and direct: the walk from Tsing Yi to
-#: Mong Kok ran 620 m along the ramps of Kwai Chung Interchange.  A trunk
-#: road at grade with no rule against walking (Gloucester Road, Lung Cheung
-#: Road) stays open.
-FOOT_PERMIT_REQUIRED_RAMP_CLASSES = frozenset({"trunk"})
-#: ... except the piece of a slip road that runs from one street of these
-#: classes to another, both of them open to walkers.  Such a piece lies
-#: inside a junction of ordinary streets (between the two carriageways of
-#: Pui Ching Road, where a slip road crosses it), or is a stretch of an
-#: ordinary street that the mappers classed with the trunk road it leads to
-#: (12 m of Tuen Hing Road), and closing it cuts the street in two.  There
-#: are 17 such pieces, 0.4 km in all, the longest 105 m.  A service road is
-#: not a street for this purpose: past the gate of a yard, a slip road is
-#: still a slip road.
-FOOT_RAMP_JUNCTION_CLASSES = frozenset({
-    "primary", "secondary", "tertiary", "residential", "living_street",
-    "unclassified",
-})
+#: Classes whose viaducts a walker may use only where the data permits
+#: walking by name.  OpenStreetMap bars walkers from most of Hong Kong's
+#: trunk roads but leaves the rest untagged, the viaducts of interchanges
+#: among them, and an open viaduct is level and direct: the walk from Tsing
+#: Yi to Mong Kok ran over the Kwai Chung Interchange.  A trunk road at
+#: grade with no rule against walking (Gloucester Road, Lung Cheung Road)
+#: stays open, and so do its slip roads at grade: closing those as well
+#: left the carriageway between two interchanges a dead end, and a pin
+#: that landed on it (Diamond Hill Station, on Lung Cheung Road) was
+#: walked 400 m along the road to the next junction and back.
+VIADUCT_PERMIT_REQUIRED_CLASSES = frozenset({"trunk"})
+#: A run of bridge on such a road is a viaduct when it is longer than this
+#: (m).  Shorter ones are a culvert or a subway's roof under a road that is
+#: at grade on both sides (23 m of Chatham Road North, 86 m of Nga Cheung
+#: Road).
+VIADUCT_MIN_M = 100.0
 
 #: Land nobody walks or rides through, which OpenStreetMap maps as plain
 #: service roads because the gate is a point and the fence a line: the
-#: container terminals, the power stations and military land.  A service
-#: road is closed to both modes where it lies inside an Overture land-use
-#: polygon of subtype ``military`` (other than the classes exempted below),
-#: or of class ``industrial`` whose name holds one of these phrases.  The
-#: phrases pick out six sites in Hong Kong: Kwai Tsing Container Terminals,
-#: the River Trade Terminal, and the Lamma, Castle Peak, Black Point and
-#: Penny's Bay power stations.  The land-use theme has no class for a port
-#: or a power station, so the names are all there is to go on.
+#: container terminals and cargo working areas, the power stations, the
+#: dockyard and the depots, and military land.  A service road is closed to
+#: both modes where it lies inside an Overture land-use polygon of subtype
+#: ``military`` (other than the classes exempted below), or of class
+#: ``industrial`` whose name holds one of these phrases.  The land-use
+#: theme has no class for a port or a power station, so the names are all
+#: there is to go on.
 CLOSED_LAND_NAMES = ("container terminal", "river trade terminal",
-                     "power station")
+                     "power station", "cargo working area",
+                     "cargo handling area", "cargo terminal", "superterminal",
+                     "dockyard", "depot", "gas production")
 #: Military land that is open country: the Castle Peak firing range is 22
 #: square kilometres of hillside crossed by hikers' paths and closed only on
 #: firing days.
@@ -600,6 +604,11 @@ BIKE_PUSH_MAX_M = 50.0
 #: ... and charged this many times its length wherever the class comfort
 #: multipliers apply: walking pace beside riding pace.
 BIKE_PUSH_MULTIPLIER = 3.0
+#: A pushed link steeper than this from end to end is not opened after
+#: all: a few metres of "footway" that rise at a quarter or a half are a
+#: flight of steps the map did not class as one (25 m off Dyer Avenue in
+#: Hung Hom climbs 12 m), and nobody pushes a bicycle up those.
+BIKE_PUSH_MAX_GRADE = 0.20
 
 # --------------------------------------------------------------------------
 # Analysis parameters

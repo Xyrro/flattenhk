@@ -612,48 +612,61 @@ def test_a_tunnel_the_data_closes_in_part_is_closed_throughout():
     assert out["walk_ok"].tolist() == [False, True]
 
 
-def test_trunk_slip_roads_and_viaducts_are_closed_to_walkers():
+def test_trunk_viaducts_are_closed_to_walkers():
+    """A viaduct of a trunk road is closed to walkers unless the data permits
+    walking by name; the road at grade, its slip roads at grade and a short
+    bridge in an at-grade road stay as the data has them."""
     from hk_flat_routes.network import resolve_access
+    deck = {"flags": ["is_bridge"]}
     out = resolve_access(_pieces([
         ("a", "b", "trunk", [(0, 0), (100, 0)]),
         ("b", "c", "trunk", [(100, 0), (200, 0)], {"flags": ["is_link"]}),
-        ("c", "d", "trunk", [(200, 0), (300, 0)], {"flags": ["is_bridge"]}),
-        ("d", "e", "trunk", [(300, 0), (400, 0)],
+        # a viaduct in two pieces, 60 m and 70 m: judged as one run of 130 m
+        ("c", "d", "trunk", [(200, 0), (260, 0)], deck),
+        ("d", "e", "trunk", [(260, 0), (330, 0)], {"flags": ["is_bridge", "is_link"]}),
+        ("e", "f", "trunk", [(330, 0), (500, 0)],
          {"flags": ["is_bridge"], "rules": [rule("designated", mode=["foot"])]}),
-        ("e", "f", "primary", [(400, 0), (500, 0)], {"flags": ["is_bridge", "is_link"]}),
+        ("f", "g", "primary", [(500, 0), (700, 0)], deck),
+        # 40 m of deck over a culvert, the road at grade either side
+        ("p", "q", "trunk", [(0, 50), (100, 50)]),
+        ("q", "r", "trunk", [(100, 50), (140, 50)], deck),
+        ("r", "s", "trunk", [(140, 50), (240, 50)]),
     ]))
-    assert out["walk_ok"].tolist() == [True, False, False, True, True]
+    assert out["walk_ok"].tolist() == [True, True, False, False, True, True, True, True, True]
     assert out["bike_ok"].all()
 
 
-def test_a_slip_road_piece_inside_a_junction_of_streets_stays_open():
-    """Pui Ching Road in small: a street of two carriageways that a trunk
-    slip road crosses.  The 12 m of slip road between the carriageways is
-    all that joins them there, and is part of the junction; the slip road
-    beyond it is a slip road, and so is one a footpath lands on."""
-    from hk_flat_routes.network import resolve_access
-    link = {"flags": ["is_link"]}
-    rows = [("a", "b", "secondary", [(0, 0), (100, 0)]),
-            ("c", "d", "secondary", [(100, 12), (0, 12)]),
-            ("b", "c", "trunk", [(100, 0), (100, 12)], link),
-            ("c", "e", "trunk", [(100, 12), (100, 112)], link),
-            ("e", "f", "trunk", [(100, 112), (300, 112)]),
-            ("b", "g", "trunk", [(100, 0), (100, -50)], link),
-            ("g", "h", "footway", [(100, -50), (150, -50)])]
-    out = resolve_access(_pieces(rows))
-    assert out["walk_ok"].tolist() == [True, True, True, False, True, False, True]
-    assert out["bike_ok"].tolist() == [True] * 6 + [False]
-    # the junction of a deck is a junction too
-    rows[2] = rows[2][:4] + ({"flags": ["is_link", "is_bridge"]},)
-    assert resolve_access(_pieces(rows))["walk_ok"].iloc[2]
-    # a carriageway the data closes to walkers is no street to join, and
-    # neither is a service road: past the gate of a yard, a slip road is
-    # still a slip road
-    other = rows[1]
-    rows[1] = other + ({"rules": [rule("denied", mode=["foot"])]},)
-    assert not resolve_access(_pieces(rows))["walk_ok"].iloc[2]
-    rows[1] = other[:2] + ("service",) + other[3:]
-    assert not resolve_access(_pieces(rows))["walk_ok"].iloc[2]
+def test_a_short_link_of_class_unknown_is_kept_as_a_service_road():
+    """A stub of class ``unknown`` between an estate road and the street
+    outside is kept; a long one (a road under construction) and one that
+    leads nowhere are not, and neither is a chain longer than the limit."""
+    import pandas as pd
+    import shapely
+    from hk_flat_routes.config import UNKNOWN_LINK_MAX_M
+    from hk_flat_routes.network import _base_filter
+
+    def seg(cls, conns, metres, y=0.0):
+        # a degree of longitude is about 103 km at Hong Kong's latitude
+        line = shapely.LineString([(114.0, 22.3 + y), (114.0 + metres / 102_960, 22.3 + y)])
+        return {"subtype": "road", "class": cls, "subclass": None,
+                "connectors": [{"connector_id": c, "at": float(i)} for i, c in enumerate(conns)],
+                "geometry": shapely.to_wkb(line)}
+
+    assert UNKNOWN_LINK_MAX_M == 50.0
+    df = pd.DataFrame([
+        seg("residential", ["a", "b"], 100),
+        seg("residential", ["c", "d"], 100, 0.001),
+        seg("unknown", ["b", "c"], 20),             # joins the two streets
+        seg("unknown", ["a", "x"], 20),             # leads nowhere
+        seg("unknown", ["a", "d"], 300),            # a road being built
+        seg("unknown", ["b", "m"], 15),             # two pieces, 30 m in all,
+        seg("unknown", ["m", "d"], 15),             # ... from street to street
+        seg("unknown", ["a", "n"], 30),             # two pieces, 60 m in all
+        seg("unknown", ["n", "c"], 30),
+    ])
+    out = _base_filter(df)
+    assert out.index.tolist() == [0, 1, 2, 5, 6]
+    assert out["cls"].tolist() == ["residential", "residential", "service", "service", "service"]
 
 
 def test_service_roads_inside_a_closed_site_are_closed():

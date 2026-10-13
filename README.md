@@ -42,9 +42,9 @@ the checks against Hong Kong ground truth are in
 
 Type where you are and where you are going, in English or Chinese, then
 drag the slider from **shortest** to **flattest** and watch the route
-change. The slider steps through every route that no other route beats on
-both distance and climbing, solved in your browser over the full street
-graph: sliding right never shortens the route and never adds climbing. The
+change. The slider steps through the routes that no other route beats on
+both distance and climbing (up to thirty of them, spread evenly along the
+frontier), solved in your browser over the full street graph: sliding right never shortens the route and never adds climbing. The
 numbers, the elevation profile and the list of streets follow along.
 
 It opens on Statue Square in Central to the University of Hong Kong: the
@@ -82,8 +82,8 @@ Three things are Hong Kong's own:
   Lands Department's gazetteer and iGeoCom, its building names, the Address
   Lookup Service and OpenStreetMap. A query typed in Chinese is answered in
   Chinese.
-- **Scale.** The page carries the whole territory: 260,127 street and
-  path segments, 517,914 directed walking arcs and 155,536 cycling ones,
+- **Scale.** The page carries the whole territory: 260,082 street and
+  path segments, 518,392 directed walking arcs and 155,478 cycling ones,
   with 55,900 places and 125,000 street numbers, in one 10.4 MB download.
   A trip across town solves in about half a second.
 
@@ -129,47 +129,47 @@ tables. Distances in kilometres, heights in metres above Principal Datum
 - **20% more walking, 49% less climbing**, over the 1,354 ordered pairs of
   neighborhoods with a walking route. The mean steepest pitch on a trip
   falls from 42% (a distance-minimising walker takes every stairway on the
-  way) to 26%, and to 16% under the grade-averse objective, which costs 35%
+  way) to 25%, and to 16% under the grade-averse objective, which costs 35%
   more distance. Total climbing and peak steepness are different
   objectives, here as in San Francisco.
 - **Part of that saving is not going over the mountain.** The shortest
-  route takes any mapped way, and 39% of its climbing is done on hill
+  route takes any mapped way, and 38% of its climbing is done on hill
   paths, tracks and steps that make up a tenth of its length. Sha Tin to
-  Tai Po is 589 m of climbing by the shortest path, over Grassy Hill, and
-  22 m by the flattest, for 1.3 km more.
+  Tai Po is 589 m of climbing by the shortest path, over the hills of Tai
+  Po Kau, and 22 m by the flattest, for 1.3 km more.
 - **Hong Kong is not one city on foot.** The walkable network falls into 21
   pieces; three hold the 56 neighborhoods (Kowloon and the New Territories
   32, Hong Kong Island 19, Lantau 5), and of the 3,080 ordered pairs that 56
   places would give, 1,726 have no walking route at all. Not one of the
   1,216 pairs across Victoria Harbour does.
 - **The landmasses differ.** The flat route avoids 50% of the climbing on
-  the mainland, 45% on Hong Kong Island and 40% on Lantau, for 17 to 21%
+  the mainland, 44% on Hong Kong Island and 40% on Lantau, for 17 to 21%
   of extra distance.
-- **The flat corridors are the reclamations and the old coast roads.** 89
-  walking corridors, 156 km, of which 51 lie wholly below 15 mPD: Lai Chi
+- **The flat corridors are the reclamations and the old coast roads.** 86
+  walking corridors, 158 km, of which 51 lie wholly below 15 mPD: Lai Chi
   Kok Road with Kwai Chung Road, the Shing Mun River and Tolo Harbour from
-  Sha Tin to Tai Po, Castle Peak Road along the coast, Boundary Street; on
-  the Island, King's Road and Java Road, Gloucester Road, Des Voeux Road
-  West and the Kennedy Town praya. Six are level roads held high on a
-  hillside (Shek O Road at 114 to 151 mPD, Sir Cecil's Ride at 200, Bowen
-  Road at 122), and six more are neither level nor low but the gentlest
-  way over high ground (Tai Po Road over Piper's Hill, Repulse Bay Road,
-  Stubbs Road).
-- **Half of the "passes" are doorsteps.** Between the 677 pairs of
-  neighborhoods that can be walked between, only 53 street segments are
-  ever the binding high point, and for 50% of pairs that point is within
-  5 m of one end of the trip: the neighborhood itself is up the hill (The
-  Peak at 292 mPD, Jardine's Lookout at 162, Mid-Levels West at 119). The
-  true ridges are few: Tseung Kwan O behind 135 m, Discovery Bay behind
-  159 m, Stanley behind 76 m, Sai Kung behind 70 m. One divide, Castle
-  Peak Road at Ting Kau (32 mPD), stands between the New Territories'
-  towns and Kowloon for 160 pairs, though staying under it means a route
-  of 46 km at the median where the shortest is 20 km.
-- **Half of all pairs can halve their climbing** (54%), at a median detour
-  of 12%. The frontiers are close to straight: climbing comes off roughly
+  Sha Tin to Tai Po, Boundary Street; on the Island, King's Road and Java
+  Road, Gloucester Road, Des Voeux Road West and the Kennedy Town praya.
+  Castle Peak Road along the coast is as much used and nearly as low (4 to
+  32 mPD). Six are level roads held high on a hillside (Shek O Road at 114
+  to 151 mPD, Sir Cecil's Ride at 200, Bowen Road at 122), and five more
+  are neither level nor low but the gentlest way over high ground (Tai Po
+  Road over Piper's Hill, Repulse Bay Road, Stubbs Road).
+- **For half of the pairs the "pass" is a doorstep.** Between the 677 pairs
+  of neighborhoods that can be walked between, only 53 street segments
+  are ever the binding high point, and for 50% of pairs that point is
+  within 5 m of one end of the trip: the neighborhood itself is up the
+  hill (The Peak at 292 mPD, Jardine's Lookout at 162, Mid-Levels West at
+  119). The true ridges are few: Tseung Kwan O behind 135 m, Discovery Bay
+  behind 159 m, Stanley behind 76 m, Sai Kung behind 70 m. One divide,
+  Castle Peak Road at Ting Kau (32 mPD), stands between the New
+  Territories' towns and Kowloon for 160 pairs, though staying under it
+  means a route of 46 km at the median where the shortest is 20 km.
+- **Half of all pairs can halve their climbing** (53%), at a median detour
+  of 13%. The frontiers are close to straight: climbing comes off roughly
   in proportion to the extra distance, with no sharp knee.
-- **A bicycle is not a walker.** Of 12,930 km open to a walker a bicycle
-  may be ridden on 5,033 km: no steps, and footways only where signed,
+- **A bicycle is not a walker.** Of 12,928 km open to a walker a bicycle
+  may be ridden on 5,014 km: no steps, and footways only where signed,
   with another 45 km of short footway links it is pushed along. Eight
   pairs can be walked and not ridden, and the cycling network has four
   separate groups of neighborhoods against three on foot: Discovery Bay's
@@ -189,13 +189,13 @@ tested.
 | The sea | has values in the DEM | is *nodata*; smoothing is a normalised convolution so waterfront streets are not dragged toward a fill value |
 | Hillside roads | rare | everywhere: each sample is taken at the flattest spot within 6 m of the mapped centreline, because a path cut into a 60% slope mapped 2 m off reads as a string of climbs |
 | Bridge ends | DEM at the node | re-levelled from the approach: the bare-earth model is already falling into the gully under the last metres of deck |
-| Bridge/tunnel flags | whole segment | per stretch (`between`): half of Hong Kong's bridge flags cover only part of a segment |
+| Bridge/tunnel flags | whole segment | per stretch (`between`): two in five of Hong Kong's bridge flags, and half of its tunnel flags, cover only part of a segment |
 | Access rules | whole segment | per stretch, and vehicle height/weight limits no longer close streets to walkers |
-| Road tunnels | as tagged | as tagged, and a tunnel on a main road is judged whole: one of more than 1 km is closed to walkers and cyclists where the data does not say (a tube of Tate's Cairn Tunnel is tagged open), a shorter one where the data closes any part of it |
-| Trunk roads | open unless denied | their slip roads and bridges are closed to walkers unless signed for them: a quarter of that length carries no rule against walking, ramps of interchanges among it |
-| Gated land | not an issue | service roads inside container terminals, power stations and military land are closed: the gate is a point on the map, which no access rule records |
-| Class `unknown` | routable | dropped: in Hong Kong it is roads still under construction and TomTom segments with nothing to judge them by |
-| Bicycles on footways | allowed unless denied | allowed only where signed (cycling on a footpath is an offence); a footway of 50 m or less that joins two rideable streets is pushed along, at three times its length |
+| Road tunnels | as tagged | as tagged, and a tunnel on a main road is judged whole: one of more than 1 km is closed to walkers and cyclists where the data does not say (one tube of Tate's Cairn Tunnel carries no rule against walking), a shorter one where the data closes any part of it |
+| Trunk roads | open unless denied | their viaducts are closed to walkers unless signed for them: the data bars walkers from most and says nothing of the rest, the decks of interchanges among them |
+| Gated land | not an issue | service roads inside container terminals, cargo yards, power stations, depots and military land are closed: the gate is a point on the map, which no access rule records |
+| Class `unknown` | routable | dropped, but for links of at most 50 m between two streets: in Hong Kong it is roads still under construction and TomTom segments with nothing to judge them by |
+| Bicycles on footways | allowed unless denied | allowed only where signed (cycling on a footpath is an offence); a footway of 50 m or less that joins two rideable streets is pushed along, at three times its length, unless it is as steep as stairs |
 | Sidewalks | dropped | kept, whatever their length, where a footbridge, subway or stair lands on one or the carriageway is closed to walkers, and the centreline network needs it |
 | Street names | one string | English and Chinese, resolved per stretch (one segment is Nathan Road, then Austin Road) |
 | Connectivity | largest component | every landmass: each connected piece of 40 nodes or more, with pieces joined by one-way streets counted as one |
@@ -220,7 +220,8 @@ which the code still follows line for line.
    published as 3,253 tiles of 750 m x 600 m on the government's CSDI
    portal. HK1980 Grid is also the CRS of every length and slope
    computation, so no raster is ever reprojected.
-2. **Tiles, not a mosaic.** The territory at 0.5 m is 12 billion cells.
+2. **Tiles, not a mosaic.** One mosaic of the territory at 0.5 m would be
+   12 billion cells.
    Sample points are bucketed by tile and each tile is read with a margin
    of its eight neighbours wider than the smoothing filter's reach, so the
    result is identical to smoothing one seamless raster (tested to the
@@ -272,8 +273,8 @@ which the code still follows line for line.
   above the carriageway) with a median absolute deviation of 0.26 m; 88%
   are within 1 m and 97% within 2 m, alike below 20 m and above 100 m.
 - **An independent terrain model.** Against the Lands Department's 5 m
-  model (2015 photogrammetry) at 3,995 random street points: median -0.9 m,
-  91% within that model's own stated accuracy of 5 m.
+  model (2015 photogrammetry) at 3,997 random street points: median -0.9 m,
+  90% within that model's own stated accuracy of 5 m.
 - **Documented gradients.** The Transport Department's stated maximum lies
   between the model's section mean and its steepest 100 m, to within the 2
   points the report allows for rounding, on 15 of 15 road sections that
@@ -300,7 +301,7 @@ which the code still follows line for line.
   Gap 241.7 against 241, Tsuen Kam Au 478.5 against a bench mark's 478.2).
 - **Internal invariants.** Nine identities (gain - loss = net change, one
   elevation per node, no maximum gradient over the 60% ceiling it is
-  clipped to, no stairway open to bicycles and so on) hold on all 520,254
+  clipped to, no stairway open to bicycles and so on) hold on all 520,164
   directed edges.
 - **Not reproduced**, and not tuned away: Smithfield cannot be followed
   (160 m of it is a road tunnel, closed), Castle Road reads 14% against a
@@ -310,7 +311,8 @@ which the code still follows line for line.
 **Sensitivity** (`python -m hk_flat_routes sensitivity`, which writes its
 tables to `outputs/sensitivity.md`). The harness rebuilds the elevations
 and the analysis under thirteen one-at-a-time changes: sample spacing
-2.5 and 10 m, smoothing window 12.5 and 50 m, dead-band 0.25 and 1 m,
+2.5 and 10 m, smoothing window 25 and 100 m (half and double the
+baseline's 50 m), dead-band 0.25 and 1 m,
 spatial pre-filter 0 and 3 m (upstream's), each of the three hillside
 corrections switched off in turn (the terrace search, the running median,
 the re-levelling of bridge ends), and the second- and third-nearest
@@ -330,13 +332,17 @@ adds:
   Segments are cut at range ends as well as at connectors, so every piece
   is wholly a bridge or not, open or closed, and named for itself.
   Flagging whole segments, as upstream does, would turn 1,600 km of Hong
-  Kong's network into straight ramps where 480 km is actually bridge or
+  Kong's network into straight ramps where 490 km is actually bridge or
   tunnel.
 - **Class `unknown` is dropped.** Upstream routes over it. In Hong Kong's
   extract it holds OpenStreetMap's roads still under construction (the
   planned streets of Kwu Tung North and Hung Shui Kiu) and the 2,148
   segments Overture takes from TomTom, which carry no class, name or
-  access rule. Nothing in the network is TomTom's.
+  access rule. One kind is kept, as a service road: a run of at most 50 m
+  that joins two streets of the network (171 segments in the built network, 4.0 km in all, 156 of them
+  TomTom's). Without those
+  the walk from a bus terminus to the block beside it became a walk round
+  the estate.
 - **Tunnels.** Pedestrians and cyclists are barred from every vehicular
   tunnel in Hong Kong, and the data says so for all but a tube of Tate's
   Cairn Tunnel and a slip road of Kai Tak Tunnel. A tunnel on a motorway,
@@ -351,17 +357,17 @@ adds:
   flyover than a tunnel: Cheung Tung Road at Sunny Bay, or Tuen Hi Road
   in Tuen Mun, at 159 m the longest left open.
 - **Trunk roads.** A trunk road at grade with no rule against walking
-  (Gloucester Road, Lung Cheung Road) is open to walkers. Its slip roads
-  and bridges are closed to them unless the data permits walking by name:
-  the data bars walkers from three quarters of that length and says
-  nothing of the rest, ramps of interchanges among it, and an open viaduct
-  is level, direct and nowhere anyone walks. The one exception is a piece
-  of slip road that runs from one ordinary street to another, both open
-  to walkers: it lies inside a junction, and closing it would cut a
-  street in two.
-- **Gated land.** Service roads inside the container terminals, the power
-  stations and military land (the firing range at Castle Peak excepted,
-  which is open hillside) are closed to both modes. OpenStreetMap maps
+  (Gloucester Road, Lung Cheung Road) is open to walkers, and so are its
+  slip roads at grade. Its viaducts, runs of bridge longer than 100 m, are
+  closed to them unless the data permits walking by name: the data bars
+  walkers from most of them and says nothing of the rest, the decks of
+  Kwai Chung Interchange among them, and an open viaduct is level, direct
+  and nowhere anyone walks (10 km closed by the rule).
+- **Gated land.** Service roads inside the container terminals and public
+  cargo working areas, the power stations, the dockyards, the bus and
+  railway depots and military land (the firing range at Castle Peak
+  excepted, which is open hillside) are closed to both modes
+  (100 km closed by the rule). OpenStreetMap maps
   them as plain service roads, because a gate is a point and no rule on
   the road records it; the land-use polygons of Overture's base theme do,
   which makes that extract an input of the network and not only of the
@@ -375,8 +381,9 @@ adds:
   the cycling network is opened as a *pushed link*: the cyclist dismounts,
   and the link costs three times its length. A run is opened only where
   the two points are otherwise unconnected or more than three times (and
-  30 m) farther apart by riding; never steps, a bridge or a tunnel, and
-  never a footway the data closes to bicycles by name.
+  30 m) farther apart by riding; never steps, a bridge or a tunnel, never a
+  footway the data closes to bicycles by name, and not one that rises at
+  more than 20% from end to end, which is a flight of steps in fact.
 - **Sidewalks and crossings** are mapped as separate ways in parts of Hong
   Kong, and footbridges, subways and stairs land on them. Travel is still
   modelled on centrelines, but a run of sidewalk or crossing is kept when
@@ -384,10 +391,10 @@ adds:
   unconnected or more than 1.3 times (and 30 m) farther apart. A run is
   followed for up to 3 km, so that a long one is judged like any other:
   the footways of Tsing Tsuen Bridge are 1.6 km of sidewalk beside a
-  carriageway closed to walkers (798 km kept of 1,448 km mapped, 18 km of
+  carriageway closed to walkers (796 km kept of 1,448 km mapped, 18 km of
   it only as pushed links).
-  Dropping them all, as upstream does, cuts 274 km of street and path
-  (2.3% of the walkable centrelines) off from the rest of its landmass.
+  Dropping them all, as upstream does, cuts 272 km of street and path
+  (2.2% of the walkable centrelines) off from the rest of its landmass.
 - **Landmasses.** A landmass is a set of strongly connected components of
   40 nodes or more that one-way streets join in either direction, together
   with the streets on the way between them, and is the same in Python and
@@ -438,8 +445,8 @@ not redistributed in this repository.
 
 Overture's extract also holds 2,148 road segments that it takes from
 TomTom, not OpenStreetMap (ODbL 1.0 as well). All are of class `unknown`,
-which is not routed on, so none is in the network or in anything built
-from it.
+of which only the short links described under Street network are kept:
+156 of them, 3.7 km in pieces of 50 m at most, are in the network.
 
 **Keep the Overture extracts.** Everything else can be downloaded again;
 the Overture release cannot, once it is retired. Overture hosts only its
@@ -529,7 +536,7 @@ Where things are read and written is set from the environment:
 | `HKFR_ROOT` | The directory holding `data/`, `outputs/` and `site/`. The checkout by default; the current directory when the package was installed with `pip install .` and has no checkout around it; `data/` and `outputs/` are made there by the first stage that runs. |
 | `HKFR_RUN_DIR` | Redirects `data/processed`, `outputs` and `site` into this directory, leaving `data/raw` shared: a second build that does not touch the first. `sensitivity` uses it for each configuration. |
 | `HKFR_OVERRIDES` | A JSON object of parameter overrides for that build, such as `{"dem_sigma_m": 3}`. The names are the fields of `ElevationConfig` and `AnalysisConfig` in [`config.py`](hk_flat_routes/config.py); an unknown name or a value of the wrong type is an error. |
-| `HKFR_OVERTURE_RELEASE` | The Overture release `download` reads, in place of the pinned 2026-09-23.1. Different data, so different figures. An extract already in `data/raw` is kept whatever this says. Each extract records the release it was read from, and `download` warns when that is not the release in force: move the `overture_*_hk.parquet` files away, or force the download, to change release. |
+| `HKFR_OVERTURE_RELEASE` | The Overture release `download` reads, in place of the pinned 2026-09-23.1. Different data, so different figures. An extract already in `data/raw` is kept whatever this says. Each extract written from now on records the release it was read from (one that names none is taken for the pinned release), and `download` warns when that is not the release in force: move the `overture_*_hk.parquet` files away, or force the download, to change release. |
 
 (`HKFR_SITE_URL`, `HKFR_REPO_URL` and `HKFR_SITE_DOMAIN` are described
 under the next heading; `HKFR_FORCE_PROGRESS=1` shows the progress bars
@@ -640,14 +647,15 @@ outputs/              deliverables
   land-use polygon covers is not, and footways inside those sites are
   left as mapped.
 - **The rules that close roads are narrow.** The trunk-road rule keeps
-  walkers off slip roads and viaducts and does not bind bicycles, which
-  may still be routed over one that the data does not close to them. The
-  tunnel rule leaves a covered stretch of main road shorter than 1 km
-  open wherever the data closes no part of it: 101 m of Ching Cheung
-  Road and a 70 m stub of the Central Kowloon Bypass are the two left.
-  And where a mapped footpath lands on a trunk slip road, the path loses
-  its way through with the slip road; some twenty such places make a
-  walk 0.1 to 1.8 km longer.
+  walkers off viaducts only. A trunk road at grade that the data does not
+  bar them from stays open, pavement or no pavement (Tuen Mun Road at Fu
+  Tei is one), and the rule does not bind bicycles at all, which may
+  still be routed over a viaduct the data leaves open. The tunnel rule
+  leaves a covered stretch of main road shorter than 1 km open wherever
+  the data closes no part of it: 1.3 km in 23 pieces of 101 m at most,
+  most of them streets under a building or a flyover, and among them
+  101 m of Ching Cheung Road and a 70 m stub of the Central Kowloon
+  Bypass.
 - **A bicycle can be let into a district and not out.** One-way streets
   are followed as mapped, and a landmass is everything they join in
   either direction, so the page can find a ride somewhere and none back.
@@ -659,10 +667,11 @@ outputs/              deliverables
   anyone walks.** The baseline that every saving is measured against
   minimises distance over every mapped way, hill paths included, so
   between two towns it may go straight over the mountain between them:
-  Sha Tin to Tai Po by the shortest path crosses Grassy Hill at over
-  600 mPD. Part of "less climbing for a little more distance" is the
-  saving from not doing that: 39% of the baseline's climbing is on hill
-  paths, tracks and steps.
+  Sha Tin Station to Tai Po Market Station by the shortest path crosses
+  Grassy Hill at over 600 mPD (9.8 km and 741 m of climbing, against
+  13.2 km and 30 m by the flattest). Part of "less climbing for a little
+  more distance" is the saving from not doing that: 38% of the baseline's
+  climbing is on hill paths, tracks and steps.
 - **Planning areas are not neighborhoods as residents draw them** (Sham
   Shui Po is inside "Cheung Sha Wan"), each gets one access point, and the
   new-town ones are large.
@@ -683,8 +692,8 @@ from [flatten_zrh](https://github.com/MoritzFS/flatten_zrh), the Zurich
 port of the same project (MIT, (c) 2026 flatten_zrh contributors), whose
 packaging this port also follows. All three notices are in
 [`LICENSE`](LICENSE). The data it consumes is not MIT: street geometry is
-**© OpenStreetMap contributors, ODbL 1.0** (via Overture Maps; no
-TomTom-sourced segment is used), and any
+**© OpenStreetMap contributors, ODbL 1.0** (via Overture Maps, with a
+few kilometres of short links from TomTom under the same licence), and any
 redistribution of derived street geometry, including the files under
 `outputs/` and `site/data/`, carries ODbL share-alike obligations.
 Elevation, planning areas, place names and addresses are © the Government
