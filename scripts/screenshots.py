@@ -7,7 +7,9 @@ the explorer in headless Chromium, waits for them to route, and writes:
   trip;
 * ``site/preview.jpg`` -- the 1200x630 social card the page's Open Graph
   tags point at;
-* ``outputs/screenshot_interactive.png`` -- the explorer.
+* ``outputs/screenshot_interactive.png`` -- the explorer;
+* ``outputs/screenshot_warped.png`` -- the explorer with the landmass of its
+  opening trip redrawn by climbing cost.
 
 Usage: python scripts/screenshots.py   (after ``python -m hk_flat_routes map``)
 
@@ -81,6 +83,17 @@ def main() -> int:
             p.goto(f"http://127.0.0.1:{oport}/{explorer.name}")
             p.wait_for_timeout(15_000)
             shot = OUTPUT_DIR / "screenshot_interactive.png"
+            p.screenshot(path=str(shot))
+            print("wrote", shot)
+
+            # the warped city: the same page with the warp switched on
+            p.click("#warptoggle")
+            p.wait_for_function(
+                "App.warp && !App._warping"
+                " && !document.getElementById('busy').classList.contains('on')",
+                timeout=180_000)
+            p.wait_for_timeout(2500)
+            shot = OUTPUT_DIR / "screenshot_warped.png"
             p.screenshot(path=str(shot))
             print("wrote", shot)
         browser.close()

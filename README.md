@@ -1,4 +1,4 @@
-# flattenhk 平路香港
+# flattenhk
 
 The flattest walking or cycling route between any two places in Hong Kong,
 and every route between it and the shortest.
@@ -12,6 +12,8 @@ and every route between it and the shortest.
 > What is new here is the Hong Kong data, the changes Hong Kong's terrain
 > and street data forced on the method, the validation against Hong Kong
 > ground truth, and the write-up below.
+
+![Hong Kong's low-elevation backbone](outputs/hk_flat_backbone.png)
 
 Hong Kong is hillier than San Francisco and hilly in a different way. The
 city is a set of narrow flat shelves, most of them reclaimed from the sea,
@@ -53,6 +55,8 @@ Graham Street and Staunton Street, then Ladder Street to Caine Road, and
 the flattest (3.4 km, 68 m) keeps to the old waterfront along Des Voeux
 Road West as far as Western Street: half the climbing for a fifth more
 distance, with thirty routes on the slider in all.
+
+![The route finder](outputs/screenshot_route_finder.png)
 
 Everything upstream's page does, this one does: walk or bike, *prefer calm
 streets* on a bike, the **loop button** (the flattest loop of a chosen
@@ -97,10 +101,25 @@ same page is also written as one self-contained file,
 `outputs/hk_flat_routes_map.html` is upstream's second page, ported whole:
 the gradient-coloured network with the corridors, passes, barriers, lowland
 basins and bicycle layers switchable; any-to-any routing under the four
-objectives; an inspector for every street; and the *warped city*, which
-redraws a landmass so that distance on the page is effort rather than
-metres. It is one self-contained 17 MB file. In Hong Kong the warp is laid
-out one landmass at a time, and the page says which.
+objectives; an inspector for every street; and the *warped city*. It is
+one self-contained 17 MB file.
+
+![The explorer](outputs/screenshot_interactive.png)
+
+Here it is on the trip it opens with, the length of Hong Kong Island on
+foot from Pok Fu Lam to Shau Kei Wan: 261 m of climbing becomes 54 m, for
+3.2 km more. The red is every street steeper than 10%, which traces the
+hills like contours; the pale blue lines are the flat corridors the
+analysis found, and the dots are the passes.
+
+![Hong Kong Island redrawn by climbing cost](outputs/screenshot_warped.png)
+
+The warp redraws a landmass so that distance on the page is effort rather
+than metres: places separated by a ridge move apart, places joined by a
+flat corridor pull together. On Hong Kong Island the flat north shore,
+cheap to walk along, gathers in the middle, and the hills and the south
+side fan out around it. In Hong Kong the warp is laid out one landmass at
+a time, and the page says which.
 
 ## What it produces
 
@@ -118,13 +137,17 @@ out one landmass at a time, and the page says which.
 | `outputs/passes.{csv,geojson}`, `pass_matrix.csv`, `basin_passes.csv` | The lowest crossing between every pair of neighborhoods |
 | `outputs/barriers.{csv,geojson}` | Steep streets, with and without a flat alternative |
 | `outputs/lowland_basins.{csv,geojson}` | Connected street below 15 mPD |
-| `outputs/hk_flat_backbone.{png,pdf}`, `hk_street_grades.png` | Static maps |
+| [`outputs/hk_flat_backbone.png`](outputs/hk_flat_backbone.png) / `.pdf` | Static map of the low-elevation backbone, over a hillshade computed from the same LiDAR |
+| [`outputs/hk_street_grades.png`](outputs/hk_street_grades.png) | Territory-wide street-gradient map |
+| [`outputs/screenshot_route_finder.png`](outputs/screenshot_route_finder.png), [`screenshot_interactive.png`](outputs/screenshot_interactive.png), [`screenshot_warped.png`](outputs/screenshot_warped.png) | Screenshots of the two pages and of the warped city |
 
 ## Headline findings
 
 All from [`outputs/findings.md`](outputs/findings.md), which has the
 tables. Distances in kilometres, heights in metres above Principal Datum
 (mPD).
+
+![Hong Kong street gradients](outputs/hk_street_grades.png)
 
 - **20% more walking, 49% less climbing**, over the 1,354 ordered pairs of
   neighborhoods with a walking route. The mean steepest pitch on a trip
